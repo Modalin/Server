@@ -60,19 +60,53 @@ const investorSchema = new mongoose.Schema({
     required: true
   },
   phone: {
-    type: Number,
-    required: true
+    type: String,
+    required: true,
+    validate: {
+      validator: function(v) {
+        return /\d+/g.test(v);
+      },
+      message: props => `${props.value} is not a valid numbers!`
+    }
   },
   document: {
     KTP: String,
-    NPWP: String
+    NPWP: {
+      type: String,
+      default: 0,
+      validate: {
+        validator: function(v) {
+          return /\d+/g.test(v);
+        },
+        message: props => `${props.value} is not a valid numbers!`
+      }
+    }
   },
   wallet: {
-    type: Object,
-    max: 3
+    accountNumber: {
+      type: String,
+      default: 0,
+      validate: {
+        validator: function(v) {
+          return /\d+/g.test(v);
+        },
+        message: props => `${props.value} is not a valid numbers!`
+      }
+    },
+    saldo: {
+      type: Number
+    },
+    income: {
+      type: Number
+    }
   }
 });
 
 const Investor = mongoose.model('Investors', investorSchema);
 
-module.exports = {Mitra, Investor};
+//Connection
+const db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'database connection error:'));
+
+module.exports = {Mitra, Investor, db};
