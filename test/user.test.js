@@ -221,6 +221,24 @@ describe('Investor service', () => {
                         }
                     })
             })
+            test('should return error with status 400 because invalid input password', done => {
+                const loginInvestor = {
+                    email: 'investor@mail.com',
+                    password: 'qweqwe2',
+                }
+                request(app)
+                .post('/investor/signin')
+                .send(loginInvestor)
+                .end((err, response) => {
+                    if (err) {
+                        done(err)
+                    } else {
+                        expect(response.status).toBe(400)
+                        expect(response.body).toHaveProperty('message', 'Invalid Input')
+                        return done()
+                    }
+                })
+            })
         })
     })
 })
@@ -359,6 +377,24 @@ describe('Mitra service', () => {
                             return done()
                         }
                     })
+            })
+            test('should return error with status 400 because invalid input password', done => {
+                const loginMitra = {
+                    email: 'mitra@mail.com',
+                    password: 'qweqwe2'
+                }
+                request(app)
+                .post('/mitra/signin')
+                .send(loginMitra)
+                .end((err, response) => {
+                    if (err) {
+                        done(err)
+                    } else {
+                        expect(response.status).toBe(400)
+                        expect(response.body).toHaveProperty('message', 'Invalid Input')
+                        return done()
+                    }
+                })
             })
         })
     })

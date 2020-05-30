@@ -35,7 +35,7 @@ class InvestorController {
             })
           } else {
             return res.status(400).json({
-              errorMessage: 'Invalid Input'
+              message: 'Invalid Input'
             })
           }
         } else {
