@@ -270,44 +270,44 @@ describe('Investor service', () => {
                     })
             })
         })
-        // describe('error login investor', () => {
-        //     test('should return error status 404 because User not found', done => {
-        //         const loginInvestor = {
-        //             email: 'investor2@mail.com',
-        //             password: 'qweqwe'
-        //         }
-        //         request(app)
-        //             .post('/investor/signin')
-        //             .send(loginInvestor)
-        //             .end((err, response) => {
-        //                 if (err) {
-        //                     done(err)
-        //                 } else {
-        //                     expect(response.status).toBe(404)
-        //                     expect(response.body).toHaveProperty('message', 'Investor not found')
-        //                     return done()
-        //                 }
-        //             })
-        //     })
-        //     test('should return error with status 400 because invalid input password', done => {
-        //         const loginInvestor = {
-        //             email: 'investor@mail.com',
-        //             password: 'qweqwe2',
-        //         }
-        //         request(app)
-        //         .post('/investor/signin')
-        //         .send(loginInvestor)
-        //         .end((err, response) => {
-        //             if (err) {
-        //                 done(err)
-        //             } else {
-        //                 expect(response.status).toBe(400)
-        //                 expect(response.body).toHaveProperty('message', 'Invalid Input')
-        //                 return done()
-        //             }
-        //         })
-        //     })
-        // })
+        describe('error login investor', () => {
+            test('should return error status 404 because User not found', done => {
+                const loginInvestor = {
+                    email: 'mail123@mail.com',
+                    password: 'qweqwe'
+                }
+                request(app)
+                    .post('/investor/signin')
+                    .send(loginInvestor)
+                    .end((err, response) => {
+                        if (err) {
+                            done(err)
+                        } else {
+                            expect(response.status).toBe(404)
+                            expect(response.body).toHaveProperty('message', 'Investor not found')
+                            return done()
+                        }
+                    })
+            })
+            test('should return error with status 400 because invalid input password', done => {
+                const loginInvestor = {
+                    email: 'mail12@mail.com',
+                    password: 'qweqwe2',
+                }
+                request(app)
+                .post('/investor/signin')
+                .send(loginInvestor)
+                .end((err, response) => {
+                    if (err) {
+                        done(err)
+                    } else {
+                        expect(response.status).toBe(400)
+                        expect(response.body).toHaveProperty('message', 'Invalid Input')
+                        return done()
+                    }
+                })
+            })
+        })
     })
 })
 describe('Mitra service', () => {
@@ -441,43 +441,43 @@ describe('Mitra service', () => {
                     })
             })
         })
-        // describe('error login mitra', () => {
-        //     test('should return error status 404 because User not found', done => {
-        //         const loginMitra = {
-        //             email: 'mitra2@mail.com',
-        //             password: 'qweqwe'
-        //         }
-        //         request(app)
-        //             .post('/mitra/signin')
-        //             .send(loginMitra)
-        //             .end((err, response) => {
-        //                 if (err) {
-        //                     done(err)
-        //                 } else {
-        //                     expect(response.status).toBe(404)
-        //                     expect(response.body).toHaveProperty('message', 'Mitra not found')
-        //                     return done()
-        //                 }
-        //             })
-        //     })
-        //     test('should return error with status 400 because invalid input password', done => {
-        //         const loginMitra = {
-        //             email: 'mitra@mail.com',
-        //             password: 'qweqwe2'
-        //         }
-        //         request(app)
-        //         .post('/mitra/signin')
-        //         .send(loginMitra)
-        //         .end((err, response) => {
-        //             if (err) {
-        //                 done(err)
-        //             } else {
-        //                 expect(response.status).toBe(400)
-        //                 expect(response.body).toHaveProperty('message', 'Invalid Input')
-        //                 return done()
-        //             }
-        //         })
-        //     })
-        // })
+        describe('error login mitra', () => {
+            test('should return error status 404 because User not found', done => {
+                const loginMitra = {
+                    email: 'mitra2@mail.com',
+                    password: 'qweqwe'
+                }
+                request(app)
+                    .post('/mitra/signin')
+                    .send(loginMitra)
+                    .end((err, response) => {
+                        if (err) {
+                            done(err)
+                        } else {
+                            expect(response.status).toBe(404)
+                            expect(response.body).toHaveProperty('message', 'Mitra not found')
+                            return done()
+                        }
+                    })
+            })
+            test('should return error with status 400 because invalid input password', done => {
+                const loginMitra = {
+                    email: 'mitrasehati@mail.com',
+                    password: 'qweqwe2'
+                }
+                request(app)
+                .post('/mitra/signin')
+                .send(loginMitra)
+                .end((err, response) => {
+                    if (err) {
+                        done(err)
+                    } else {
+                        expect(response.status).toBe(400)
+                        expect(response.body).toHaveProperty('message', 'Invalid Input')
+                        return done()
+                    }
+                })
+            })
+        })
     })
 })
