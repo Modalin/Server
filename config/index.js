@@ -24,29 +24,125 @@ const mitraSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Password must be filled']
   },
+  address: {
+    type: String,
+    required: [true, 'Address must be filled']
+  },
+  photo_profile: {
+    type: String
+  },
+  phone: {
+    type: Number,
+    required: [true, 'Phone Number must be filled']
+  },
   document: {
     KTP: {
-      type: String,
-      required: [true, 'KTP must be filled']
+      url: {
+        type: String,
+        required: [true, 'KTP URL must be filled']
+      },
+      no_KTP: {
+        type: Number,
+        required: [true, 'KTP must be filled']
+      }
     },
     KTA: {
       type: String,
+      total_employee: {
+        type: Number
+      },
       required: [true, 'KTA must be filled']
     },
     NPWP: {
-      type: String,
-      required: [true, 'NPWP must be filled']
+      url: {
+        type: String,
+        required: [true, 'NPWP URL must be filled']
+      },
+      no_NPWP: {
+        type: String,
+        default: 0,
+        validate: {
+          validator: function(v) {
+            return /\d+/g.test(v);
+          },
+          message: props => `${props.value} is not a valid numbers!`
+        }
+      }
     },
     SIUP: {
-      type: String,
-      required: [true, 'SIUP must be filled']
+      url: {
+        type: String
+      },
+      no_SIUP: {
+        type: Number
+      }
     }
   },
-  business: {
-    type: Array,
-    max: 3,
-    required: [true, 'Business must be filled']
-  }
+  business: [
+    {
+      business_id: {
+        type: new mongoose.Types.ObjectId()
+      },
+      mitra: {
+        type: mongoose.Types.ObjectId,
+        ref:'Mitra'
+      },
+      investor: [
+        {
+          investor: {
+            invest_value: {
+              type: Number
+            },
+            total_unit: {
+              type: Number
+            },
+            type: mongoose.Types.ObjectId,
+            ref: 'Investor'
+          }
+        }
+      ],
+      business_name: {
+        type: String
+      },
+      business_type: {
+        type: String,
+        enum: ['Pertanian', 'Konveksi', 'Jasa', 'Wisata & Perjalanan', 'Makanan', 'Peternakan', 'Semua', 'lainnya']
+      },
+      location: {
+        lat: {
+          type: String
+        },
+        long: {
+          type: String
+        },
+        address: {
+          type: String
+        }
+      },
+      unit_business: {
+        type: Number
+      },
+      value_per_unit: {
+        type: Number
+      },
+      business_value: {
+        type: Number
+      },
+      persentase_value: {
+        type: mongoose.Types.Decimal128.fromString
+      },
+      business_description: {
+        type: String
+      },
+      images_360: {
+        type: String
+      },
+      status: {
+        type: String,
+        enum: ['','Sedang Berjalan','Pendanaan Terpenuhi']
+      }
+    }
+  ]
 });
 
 const Mitra = mongoose.model('Mitra', mitraSchema);
@@ -68,6 +164,17 @@ const investorSchema = new mongoose.Schema({
     },
     required: [true, 'Email must be filled']
   },
+  address: {
+    type: String,
+    required: [true, 'Address must be filled']
+  },
+  photo_profile: {
+    type: String
+  },
+  job: {
+    type: String,
+    required: [true, 'Job must be filled']
+  },
   password: {
     type: String,
     required: [true, 'Password must be filled']
@@ -78,25 +185,59 @@ const investorSchema = new mongoose.Schema({
   },
   document: {
     KTP: {
-      type: String,
-      required: [true, 'KTP must be filled']
+      url: {
+        type: String,
+        required: [true, 'KTP URL must be filled']
+      },
+      no_KTP: {
+        type: Number,
+        required: [true, 'KTP must be filled']
+      }
     },
     NPWP: {
-      type: String,
-      required: [true, 'NPWP must be filled']
+      url: {
+        type: String,
+        required: [true, 'NPWP URL must be filled']
+      },
+      no_NPWP: {
+        type: String,
+        default: 0,
+        validate: {
+          validator: function(v) {
+            return /\d+/g.test(v);
+          },
+          message: props => `${props.value} is not a valid numbers!`
+        }
+      }
     }
   },
   wallet: {
-    type: {
-      bank_account: Number,
-      virtual_account: Number,
-      phone: Number,
-      income: String
+    account_name: {
+      type: String
     },
-    max: 3
+    bank_name: {
+      type: String
+    },
+    account_number: {
+      type: String,
+      default: 0,
+      validate: {
+        validator: function(v) {
+          return /\d+/g.test(v);
+        },
+        message: props => `${props.value} is not a valid numbers!`
+      }
+    },
+    saldo: {
+      type: Number
+    },
+    income: {
+      type: Number
+    }
   }
 });
 
 const Investor = mongoose.model('Investors', investorSchema);
 
-module.exports = {Mitra, Investor};
+
+module.exports = { Mitra, Investor, Business };

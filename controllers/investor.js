@@ -16,7 +16,10 @@ class InvestorController {
             const payload = {
               id: foundInvestor._id,
               name: foundInvestor.name, 
-              email: foundInvestor.email, 
+              email: foundInvestor.email,
+              address: foundInvestor.address,
+              photo_profile: foundInvestor.photo_profile,
+              job: foundInvestor.job,
               phone: foundInvestor.phone,
               document: foundInvestor.document,
               wallet: foundInvestor.wallet
@@ -28,7 +31,10 @@ class InvestorController {
               token,
               id: foundInvestor._id,
               name: foundInvestor.name, 
-              email: foundInvestor.email, 
+              email: foundInvestor.email,
+              address: foundInvestor.address,
+              photo_profile: foundInvestor.photo_profile,
+              job: foundInvestor.job,
               phone: foundInvestor.phone,
               document: foundInvestor.document,
               wallet: foundInvestor.wallet
@@ -53,10 +59,13 @@ class InvestorController {
   }
 
   static async signUp(req, res) {
-    const { name, email, password, document, phone, wallet } = req.body;
+    const { name, email, address, photo_profile, job, password, document, phone, wallet } = req.body;
     const inputData = { 
       name, 
-      email, 
+      email,
+      address, 
+      photo_profile,
+      job,
       password: encrypt(password), 
       phone,
       document,
@@ -66,7 +75,10 @@ class InvestorController {
       await Investor.create(inputData).then((response) => {
         res.status(201).json({
           name: response.name, 
-          email: response.email, 
+          email: response.email,
+          address: response.address, 
+          photo_profile: response.photo_profile,
+          job: response.job,
           phone: response.phone,
           document: response.document,
           wallet: response.wallet
