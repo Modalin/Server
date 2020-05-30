@@ -15,29 +15,12 @@ class InvestorController {
           if (verify) {
             const payload = {
               id: foundInvestor._id,
-              name: foundInvestor.name, 
-              email: foundInvestor.email,
-              address: foundInvestor.address,
-              photo_profile: foundInvestor.photo_profile,
-              job: foundInvestor.job,
-              phone: foundInvestor.phone,
-              document: foundInvestor.document,
-              wallet: foundInvestor.wallet
             }
 
             const token = generateToken(payload);
 
             return res.status(200).json({
-              token,
-              id: foundInvestor._id,
-              name: foundInvestor.name, 
-              email: foundInvestor.email,
-              address: foundInvestor.address,
-              photo_profile: foundInvestor.photo_profile,
-              job: foundInvestor.job,
-              phone: foundInvestor.phone,
-              document: foundInvestor.document,
-              wallet: foundInvestor.wallet
+              token
             })
           } else {
             return res.status(400).json({
@@ -65,10 +48,10 @@ class InvestorController {
       email,
       address, 
       photo_profile,
-      job,
       password: encrypt(password), 
-      phone,
+      job,
       document,
+      phone,
       wallet
     };
     try {
@@ -79,8 +62,8 @@ class InvestorController {
           address: response.address, 
           photo_profile: response.photo_profile,
           job: response.job,
-          phone: response.phone,
           document: response.document,
+          phone: response.phone,
           wallet: response.wallet
         })
       })

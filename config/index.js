@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
+require('mongoose-double')(mongoose);
+
 const url = 'mongodb://localhost/modalin_database';
 
 mongoose.connect(url, {useNewUrlParser: true});
+const SchemaTypes = mongoose.Schema.Types;
 
 //Mitra
 const mitraSchema = new mongoose.Schema({
@@ -47,11 +50,13 @@ const mitraSchema = new mongoose.Schema({
       }
     },
     KTA: {
-      type: String,
+      kta: {
+        type: String,
+        required: [true, 'KTA must be filled']
+      },
       total_employee: {
         type: Number
       },
-      required: [true, 'KTA must be filled']
     },
     NPWP: {
       url: {
@@ -81,7 +86,10 @@ const mitraSchema = new mongoose.Schema({
   business: [
     {
       business_id: {
-        type: new mongoose.Types.ObjectId()
+        type: SchemaTypes.ObjectId,
+        index: true,
+        required: true,
+        auto: true,
       },
       mitra: {
         type: mongoose.Types.ObjectId,
@@ -129,7 +137,7 @@ const mitraSchema = new mongoose.Schema({
         type: Number
       },
       persentase_value: {
-        type: mongoose.Types.Decimal128.fromString
+        type: mongoose.Schema.Types.Double
       },
       business_description: {
         type: String
@@ -239,5 +247,4 @@ const investorSchema = new mongoose.Schema({
 
 const Investor = mongoose.model('Investors', investorSchema);
 
-
-module.exports = { Mitra, Investor, Business };
+module.exports = { Mitra, Investor };
