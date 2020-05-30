@@ -7,6 +7,7 @@ async function InvestorAuth(req, res, next) {
         await Investor.findById(req.decoded.id)
             .then(user => {
                 if (user) {
+                    req.user_id = user._id;
                     next();
                 } else {
                     return res.status(401).json({
@@ -31,6 +32,7 @@ async function MitraAuth(req, res, next) {
         await Mitra.findById(req.decoded.id)
             .then(user => {
                 if (user) {
+                    req.user_id = user._id;
                     next();
                 } else {
                     res.status(401).json({

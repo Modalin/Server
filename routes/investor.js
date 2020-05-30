@@ -1,21 +1,22 @@
 const router = require('express').Router();
 const ControllerInvestor = require('../controllers/investor');
-// const { InvestorAuth } = require('../middlewares/authentication');
+const { InvestorAuth } = require('../middlewares/authentication');
 
 //Authentication
 router.post('/signin', ControllerInvestor.signIn);
 router.post('/signup', ControllerInvestor.signUp);
 
-// router.use(InvestorAuth);
+router.use(InvestorAuth);
+
 //Profile
-// router.put('/:id');
 router.patch('/:id', ControllerInvestor.editProfile);
 router.delete('/:id', ControllerInvestor.deleteProfile);
 
-// //Wallet
-// router.get('/wallet');
-// // router.put('/wallet/:id');
-// router.patch('/wallet/:id');
-// router.delete('/wallet/:id');
+//Wallet
+router.get('/wallet/', ControllerInvestor.showWallet);
+router.patch('/wallet/', ControllerInvestor.editWallet);
+
+//Business
+router.get('/business');
 
 module.exports = router;

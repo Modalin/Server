@@ -93,8 +93,8 @@ class InvestorController {
     const { id } = req.params;
 
     Investor.findOneAndRemove({ _id: id })
-      .then(result => {
-        if (result) {
+      .then(investor => {
+        if (investor) {
           return res.status(200).json({ message: 'Success deleted profile' });
         } else {
           return res.status(404).json({ message: 'User profile not found' });
@@ -106,16 +106,29 @@ class InvestorController {
   }
 
   //Wallet
-  static showWallet() {
+  static showWallet(req, res, next) {
+    const id = req.user_id;
 
+    Investor.findById(id)
+      .then(investor => {
+        return res.status(200).json(investor.wallet);
+      })
+      .catch(err => {
+        return next(err);
+      })
   }
 
   static editWallet() {
+    const { saldo, income } = req.body;
+    const id = req.user_id;
 
-  }
-
-  static deleteWallet() {
-
+    Investor.findOneAndUpdate({ _id: id }, { saldo, income }, { new: true, runValidators: true })
+      .then(investor => {
+        return res.status(200).json(investor.wallet);
+      })
+      .catch(err => {
+        return next(err);
+      })
   }
 }
 
