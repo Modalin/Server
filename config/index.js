@@ -3,7 +3,7 @@ require('mongoose-double')(mongoose);
 
 const url = 'mongodb://localhost/modalin_database';
 
-mongoose.connect(url, {useNewUrlParser: true});
+mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
 const SchemaTypes = mongoose.Schema.Types;
 
 //Mitra
