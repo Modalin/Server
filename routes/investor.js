@@ -1,12 +1,12 @@
 const router = require('express').Router();
 const ControllerInvestor = require('../controllers/investor');
-// const { InvestorAuth } = require('../middlewares/authentication');
+const { InvestorAuth } = require('../middlewares/authentication');
 
-// router.use(InvestorAuth);
 //Authentication
 router.post('/signin', ControllerInvestor.signIn);
 router.post('/signup', ControllerInvestor.signUp);
 
+router.use(InvestorAuth);
 //Profile
 // router.put('/:id');
 router.patch('/:id');
