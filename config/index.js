@@ -26,7 +26,7 @@ const mitraSchema = new mongoose.Schema({
   },
   document: {
     KTP: {
-      type: Number,
+      type: String,
       required: [true, 'KTP must be filled']
     },
     KTA: {
@@ -34,11 +34,11 @@ const mitraSchema = new mongoose.Schema({
       required: [true, 'KTA must be filled']
     },
     NPWP: {
-      type: Number,
+      type: String,
       required: [true, 'NPWP must be filled']
     },
     SIUP: {
-      type: Number,
+      type: String,
       required: [true, 'SIUP must be filled']
     }
   },
@@ -78,11 +78,11 @@ const investorSchema = new mongoose.Schema({
   },
   document: {
     KTP: {
-      type: Number,
+      type: String,
       required: [true, 'KTP must be filled']
     },
     NPWP: {
-      type: Number,
+      type: String,
       required: [true, 'NPWP must be filled']
     }
   },
