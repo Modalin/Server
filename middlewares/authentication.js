@@ -27,11 +27,12 @@ async function InvestorAuth(req, res, next) {
 
 async function MitraAuth(req, res, next) {
     try {
-        req.decoded = verifyToken(req.headers.token);
-        await Mitra.findById(req.decoded.id)
+        let decoded = verifyToken(req.headers.token);
+        await Mitra.findById(decoded.id)
             .then(user => {
                 if (user) {
-                    next();
+                   req.mitraId = user._id
+                   return next();
                 } else {
                     res.status(401).json({
                         message: "Sorry we don't recognize you"

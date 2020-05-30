@@ -76,26 +76,26 @@ class InvestorController {
   }
 
   //Profile
-  static editProfile() {
+  // static editProfile() {
 
-  }
+  // }
 
-  static deleteProfile() {
+  // static deleteProfile() {
 
-  }
+  // }
 
   //Wallet
-  static showWallet() {
+  // static showWallet() {
 
-  }
+  // }
 
-  static editWallet() {
+  // static editWallet() {
 
-  }
+  // }
 
-  static deleteWallet() {
+  // static deleteWallet() {
 
-  }
+  // }
 }
 
 module.exports = InvestorController;

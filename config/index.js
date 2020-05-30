@@ -6,6 +6,72 @@ const url = 'mongodb://localhost/modalin_database';
 mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
 const SchemaTypes = mongoose.Schema.Types;
 
+//Bussiness
+const bussinesSchema = new mongoose.Schema({
+      mitra: {
+        type: mongoose.Types.ObjectId,
+        ref:'Mitra'
+      },
+      investor:
+        {
+          investor: {
+            invest_value: {
+              type: Number
+            },
+            total_unit: {
+              type: Number
+            },
+            type: mongoose.Types.ObjectId,
+            ref: 'Investor'
+          }
+        },
+      business_name: {
+        type: String
+      },
+      business_type: {
+        type: String,
+        enum: ['Pertanian', 'Konveksi', 'Jasa', 'Wisata & Perjalanan', 'Makanan', 'Peternakan', 'Semua', 'lainnya']
+      },
+      location: {
+        lat: {
+          type: String
+        },
+        long: {
+          type: String
+        },
+        address: {
+          type: String
+        }
+      },
+      unit_business: {
+        type: Number
+      },
+      value_per_unit: {
+        type: Number
+      },
+      business_value: {
+        type: Number
+      },
+      persentase_value: {
+        type: mongoose.Schema.Types.Double
+      },
+      business_description: {
+        type: String
+      },
+      images_360: {
+        type: String
+      },
+      total_profit: {
+        type: Number
+      },
+      status: {
+        type: String,
+        enum: ['','Sedang Berjalan','Pendanaan Terpenuhi']
+      }
+    })
+
+const Business = mongoose.model('Business', bussinesSchema);
+
 //Mitra
 const mitraSchema = new mongoose.Schema({
   name: {
@@ -83,74 +149,6 @@ const mitraSchema = new mongoose.Schema({
       }
     }
   },
-  business: [
-    {
-      business_id: {
-        type: SchemaTypes.ObjectId,
-        index: true,
-        required: true,
-        auto: true,
-      },
-      mitra: {
-        type: mongoose.Types.ObjectId,
-        ref:'Mitra'
-      },
-      investor: [
-        {
-          investor: {
-            invest_value: {
-              type: Number
-            },
-            total_unit: {
-              type: Number
-            },
-            type: mongoose.Types.ObjectId,
-            ref: 'Investor'
-          }
-        }
-      ],
-      business_name: {
-        type: String
-      },
-      business_type: {
-        type: String,
-        enum: ['Pertanian', 'Konveksi', 'Jasa', 'Wisata & Perjalanan', 'Makanan', 'Peternakan', 'Semua', 'lainnya']
-      },
-      location: {
-        lat: {
-          type: String
-        },
-        long: {
-          type: String
-        },
-        address: {
-          type: String
-        }
-      },
-      unit_business: {
-        type: Number
-      },
-      value_per_unit: {
-        type: Number
-      },
-      business_value: {
-        type: Number
-      },
-      persentase_value: {
-        type: mongoose.Schema.Types.Double
-      },
-      business_description: {
-        type: String
-      },
-      images_360: {
-        type: String
-      },
-      status: {
-        type: String,
-        enum: ['','Sedang Berjalan','Pendanaan Terpenuhi']
-      }
-    }
-  ]
 });
 
 const Mitra = mongoose.model('Mitra', mitraSchema);
@@ -247,4 +245,4 @@ const investorSchema = new mongoose.Schema({
 
 const Investor = mongoose.model('Investors', investorSchema);
 
-module.exports = { Mitra, Investor };
+module.exports = { Mitra, Investor, Business};
