@@ -35,7 +35,7 @@ class MitraController {
       })
 
     } catch (err) {
-        return res.status(err.status).json({
+        res.status(err.status).json({
           message: err.message,
       });
     }
@@ -67,34 +67,33 @@ class MitraController {
       })
     }
     catch(err) {
-      console.log(err);
       return res.status(400).json({
         error: err.errors
       })
     }
   }
 
-  //Profile
-  static editProfile() {
+  // //Profile
+  // static editProfile() {
 
-  }
+  // }
 
-  static deleteProfile() {
+  // static deleteProfile() {
 
-  }
+  // }
 
-  //Business
-  static showBusiness() {
+  // //Business
+  // static showBusiness() {
 
-  }
+  // }
 
-  static editBusiness() {
+  // static editBusiness() {
 
-  }
+  // }
 
-  static deleteBusiness() {
+  // static deleteBusiness() {
 
-  }
+  // }
 }
 
 module.exports = MitraController;

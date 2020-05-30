@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1590836245998" clover="3.2.0">
-  <project timestamp="1590836245998" name="All files">
-    <metrics statements="99" coveredstatements="88" conditionals="8" coveredconditionals="8" methods="32" coveredmethods="16" elements="139" coveredelements="112" complexity="0" loc="99" ncloc="99" packages="5" files="9" classes="9"/>
+<coverage generated="1590840435386" clover="3.2.0">
+  <project timestamp="1590840435386" name="All files">
+    <metrics statements="92" coveredstatements="88" conditionals="8" coveredconditionals="8" methods="16" coveredmethods="16" elements="116" coveredelements="112" complexity="0" loc="92" ncloc="92" packages="5" files="9" classes="9"/>
     <package name="server_final">
       <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="app.js" path="/home/virna/Documents/fase3/server_final/app.js">
@@ -18,9 +18,9 @@
       </file>
     </package>
     <package name="server_final.config">
-      <metrics statements="20" coveredstatements="15" conditionals="0" coveredconditionals="0" methods="10" coveredmethods="5"/>
+      <metrics statements="15" coveredstatements="15" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
       <file name="index.js" path="/home/virna/Documents/fase3/server_final/config/index.js">
-        <metrics statements="20" coveredstatements="15" conditionals="0" coveredconditionals="0" methods="10" coveredmethods="5"/>
+        <metrics statements="15" coveredstatements="15" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
@@ -28,25 +28,20 @@
         <line num="7" count="1" type="stmt"/>
         <line num="10" count="1" type="stmt"/>
         <line num="20" count="2" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
         <line num="71" count="2" type="stmt"/>
-        <line num="73" count="0" type="stmt"/>
         <line num="156" count="1" type="stmt"/>
         <line num="159" count="1" type="stmt"/>
         <line num="169" count="2" type="stmt"/>
-        <line num="171" count="0" type="stmt"/>
         <line num="215" count="2" type="stmt"/>
-        <line num="217" count="0" type="stmt"/>
         <line num="234" count="2" type="stmt"/>
-        <line num="236" count="0" type="stmt"/>
         <line num="248" count="1" type="stmt"/>
         <line num="250" count="1" type="stmt"/>
       </file>
     </package>
     <package name="server_final.controllers">
-      <metrics statements="45" coveredstatements="40" conditionals="8" coveredconditionals="8" methods="18" coveredmethods="8"/>
+      <metrics statements="44" coveredstatements="40" conditionals="8" coveredconditionals="8" methods="8" coveredmethods="8"/>
       <file name="investor.js" path="/home/virna/Documents/fase3/server_final/controllers/investor.js">
-        <metrics statements="22" coveredstatements="20" conditionals="4" coveredconditionals="4" methods="9" coveredmethods="4"/>
+        <metrics statements="22" coveredstatements="20" conditionals="4" coveredconditionals="4" methods="4" coveredmethods="4"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -71,7 +66,7 @@
         <line num="101" count="1" type="stmt"/>
       </file>
       <file name="mitra.js" path="/home/virna/Documents/fase3/server_final/controllers/mitra.js">
-        <metrics statements="23" coveredstatements="20" conditionals="4" coveredconditionals="4" methods="9" coveredmethods="4"/>
+        <metrics statements="22" coveredstatements="20" conditionals="4" coveredconditionals="4" methods="4" coveredmethods="4"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -93,12 +88,11 @@
         <line num="57" count="1" type="stmt"/>
         <line num="58" count="1" type="stmt"/>
         <line num="70" count="0" type="stmt"/>
-        <line num="71" count="0" type="stmt"/>
-        <line num="100" count="1" type="stmt"/>
+        <line num="97" count="1" type="stmt"/>
       </file>
     </package>
     <package name="server_final.helpers">
-      <metrics statements="9" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="3"/>
+      <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
       <file name="bcrypt.js" path="/home/virna/Documents/fase3/server_final/helpers/bcrypt.js">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
@@ -108,10 +102,9 @@
         <line num="12" count="1" type="stmt"/>
       </file>
       <file name="jwt.js" path="/home/virna/Documents/fase3/server_final/helpers/jwt.js">
-        <metrics statements="4" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="4" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
         <line num="11" count="1" type="stmt"/>
       </file>
     </package>

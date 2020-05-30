@@ -4,8 +4,9 @@ function generateToken (payload) {
     return jwt.sign(payload, 'secret')
 }
 
-function verifyToken (token) {
-    return jwt.verify(token, 'secret')
-}
+// function verifyToken (token) {
+//     return jwt.verify(token, 'secret')
+// }
 
-module.exports = { generateToken, verifyToken }
+module.exports = { generateToken }
+// module.exports = { generateToken, verifyToken }

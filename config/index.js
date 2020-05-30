@@ -19,7 +19,7 @@ const mitraSchema = new mongoose.Schema({
       validator: function(v) {
         return /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(v);
       },
-      message: props => `${props.value} is not a valid email!`
+      // message: props => `${props.value} is not a valid email!`
     },
     required: [true, 'Email must be filled']
   },
@@ -70,7 +70,7 @@ const mitraSchema = new mongoose.Schema({
           validator: function(v) {
             return /\d+/g.test(v);
           },
-          message: props => `${props.value} is not a valid numbers!`
+          // message: props => `${props.value} is not a valid numbers!`
         }
       }
     },
@@ -168,7 +168,7 @@ const investorSchema = new mongoose.Schema({
       validator: function(v) {
         return /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(v);
       },
-      message: props => `${props.value} is not a valid email!`
+      // message: props => `${props.value} is not a valid email!`
     },
     required: [true, 'Email must be filled']
   },
@@ -214,7 +214,7 @@ const investorSchema = new mongoose.Schema({
           validator: function(v) {
             return /\d+/g.test(v);
           },
-          message: props => `${props.value} is not a valid numbers!`
+          // message: props => `${props.value} is not a valid numbers!`
         }
       }
     }
@@ -233,7 +233,7 @@ const investorSchema = new mongoose.Schema({
         validator: function(v) {
           return /\d+/g.test(v);
         },
-        message: props => `${props.value} is not a valid numbers!`
+        // message: props => `${props.value} is not a valid numbers!`
       }
     },
     saldo: {

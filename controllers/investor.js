@@ -35,7 +35,7 @@ class InvestorController {
       })
 
     } catch (err) {
-        return res.status(err.status).json({
+        return res.status(500).json({
           message: err.message,
       });
     }
@@ -75,27 +75,27 @@ class InvestorController {
     }
   }
 
-  //Profile
-  static editProfile() {
+  // //Profile
+  // static editProfile() {
 
-  }
+  // }
 
-  static deleteProfile() {
+  // static deleteProfile() {
 
-  }
+  // }
 
-  //Wallet
-  static showWallet() {
+  // //Wallet
+  // static showWallet() {
 
-  }
+  // }
 
-  static editWallet() {
+  // static editWallet() {
 
-  }
+  // }
 
-  static deleteWallet() {
+  // static deleteWallet() {
 
-  }
+  // }
 }
 
 module.exports = InvestorController;
