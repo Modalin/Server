@@ -1,8 +1,11 @@
 const router = require('express').Router();
+const MitraController = require('../controllers/mitra');
+const { MitraAuth } = require('../middlewares/authentication'); 
 
+router.use(MitraAuth)
 //Auth
-router.post('/signin');
-router.post('/signup');
+router.post('/signin', MitraController.signIn);
+router.post('/signup', MitraController.signUp);
 
 //Profile
 // router.put('/:id');

@@ -1,8 +1,11 @@
 const router = require('express').Router();
+const ControllerInvestor = require('../controllers/investor');
+const { InvestorAuth } = require('../middlewares/authentication');
 
+router.use(InvestorAuth);
 //Authentication
-router.post('/signin');
-router.post('/signup');
+router.post('/signin', ControllerInvestor.signIn);
+router.post('/signup', ControllerInvestor.signUp);
 
 //Profile
 // router.put('/:id');
