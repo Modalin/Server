@@ -26,7 +26,7 @@ const mitraSchema = new mongoose.Schema({
   },
   document: {
     KTP: {
-      type: String,
+      type: Number,
       required: [true, 'KTP must be filled']
     },
     KTA: {
@@ -34,11 +34,11 @@ const mitraSchema = new mongoose.Schema({
       required: [true, 'KTA must be filled']
     },
     NPWP: {
-      type: String,
+      type: Number,
       required: [true, 'NPWP must be filled']
     },
     SIUP: {
-      type: String,
+      type: Number,
       required: [true, 'SIUP must be filled']
     }
   },
