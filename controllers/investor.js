@@ -15,23 +15,12 @@ class InvestorController {
           if (verify) {
             const payload = {
               id: foundInvestor._id,
-              name: foundInvestor.name, 
-              email: foundInvestor.email, 
-              phone: foundInvestor.phone,
-              document: foundInvestor.document,
-              wallet: foundInvestor.wallet
             }
 
             const token = generateToken(payload);
 
             return res.status(200).json({
-              token,
-              id: foundInvestor._id,
-              name: foundInvestor.name, 
-              email: foundInvestor.email, 
-              phone: foundInvestor.phone,
-              document: foundInvestor.document,
-              wallet: foundInvestor.wallet
+              token
             })
           } else {
             return res.status(400).json({
@@ -53,22 +42,28 @@ class InvestorController {
   }
 
   static async signUp(req, res) {
-    const { name, email, password, document, phone, wallet } = req.body;
+    const { name, email, address, photo_profile, job, password, document, phone, wallet } = req.body;
     const inputData = { 
       name, 
-      email, 
+      email,
+      address, 
+      photo_profile,
       password: encrypt(password), 
-      phone,
+      job,
       document,
+      phone,
       wallet
     };
     try {
       await Investor.create(inputData).then((response) => {
         res.status(201).json({
           name: response.name, 
-          email: response.email, 
-          phone: response.phone,
+          email: response.email,
+          address: response.address, 
+          photo_profile: response.photo_profile,
+          job: response.job,
           document: response.document,
+          phone: response.phone,
           wallet: response.wallet
         })
       })
@@ -98,8 +93,12 @@ class InvestorController {
     const { id } = req.params;
 
     Investor.findOneAndRemove({ _id: id })
-      .then(_ => {
-        return res.status(200).json({ message: 'Success deleted profile' });
+      .then(result => {
+        if (result) {
+          return res.status(200).json({ message: 'Success deleted profile' });
+        } else {
+          return res.status(404).json({ message: 'User profile not found' });
+        }
       })
       .catch(err => {
         return next(err);

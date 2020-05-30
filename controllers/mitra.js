@@ -15,21 +15,12 @@ class MitraController {
           if (verify) {
             const payload = {
               id: foundMitra._id,
-              name: foundMitra.name, 
-              email: foundMitra.email, 
-              document: foundMitra.document,
-              business: foundMitra.business
             }
 
             const token = generateToken(payload);
 
             return res.status(200).json({
-              token,
-              id: foundMitra._id,
-              name: foundMitra.name, 
-              email: foundMitra.email, 
-              document: foundMitra.document,
-              business: foundMitra.business
+              token
             })
           } else {
             return res.status(400).json({
@@ -51,11 +42,14 @@ class MitraController {
   }
 
   static async signUp(req, res) {
-    const { name, email, password, document, business } = req.body;
+    const { name, email, password, address, photo_profile, phone, document, business } = req.body;
     const inputData = { 
       name, 
       email, 
-      password: encrypt(password), 
+      password: encrypt(password),
+      address,
+      photo_profile,
+      phone,
       document,
       business
     };
@@ -63,13 +57,17 @@ class MitraController {
       await Mitra.create(inputData).then((response) => {
         res.status(201).json({
           name: response.name, 
-          email: response.email, 
+          email: response.email,
+          address: response.address,
+          photo_profile: response.photo_profile,
+          phone: response.phone,
           document: response.document,
           business: response.business
         })
       })
     }
     catch(err) {
+      console.log(err);
       return res.status(400).json({
         error: err.errors
       })
