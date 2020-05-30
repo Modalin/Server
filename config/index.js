@@ -7,7 +7,7 @@ mongoose.connect(url, {useNewUrlParser: true});
 const mitraSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: [true, 'Name must be filled']
   },
   email: {
     type: String,
@@ -18,21 +18,34 @@ const mitraSchema = new mongoose.Schema({
       },
       message: props => `${props.value} is not a valid email!`
     },
-    required: true
+    required: [true, 'Email must be filled']
   },
   password: {
     type: String,
-    required: true
+    required: [true, 'Password must be filled']
   },
   document: {
-    KTP: String,
-    KTA: String,
-    NPWP: String,
-    SIUP: String
+    KTP: {
+      type: Number,
+      required: [true, 'KTP must be filled']
+    },
+    KTA: {
+      type: String,
+      required: [true, 'KTA must be filled']
+    },
+    NPWP: {
+      type: Number,
+      required: [true, 'NPWP must be filled']
+    },
+    SIUP: {
+      type: Number,
+      required: [true, 'SIUP must be filled']
+    }
   },
   business: {
     type: Array,
-    max: 3
+    max: 3,
+    required: [true, 'Business must be filled']
   }
 });
 
@@ -42,7 +55,7 @@ const Mitra = mongoose.model('Mitra', mitraSchema);
 const investorSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: [true, 'Name must be filled']
   },
   email: {
     type: String,
@@ -53,11 +66,11 @@ const investorSchema = new mongoose.Schema({
       },
       message: props => `${props.value} is not a valid email!`
     },
-    required: true
+    required: [true, 'Email must be filled']
   },
   password: {
     type: String,
-    required: true
+    required: [true, 'Password must be filled']
   },
   phone: {
     type: String,

@@ -8,7 +8,7 @@ describe('Investor service', () => {
     password: '123'
   }
   const investorId = '/1';
-  const baseUrl = '/investor';
+  const baseUrl = 'localhostt:3000/investor';
   const token = 'token';
 
   describe('Success services', () => {

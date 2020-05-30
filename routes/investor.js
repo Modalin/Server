@@ -1,13 +1,14 @@
 const router = require('express').Router();
+const ControllerInvestor = require('../controllers/investor');
 
 //Authentication
-router.post('/signin');
-router.post('/signup');
+router.post('/signin', ControllerInvestor.signIn);
+router.post('/signup', ControllerInvestor.signUp);
 
 //Profile
 // router.put('/:id');
-router.patch('/:id');
-router.delete('/:id');
+router.patch('/:id', ControllerInvestor.editProfile);
+router.delete('/:id', ControllerInvestor.deleteProfile);
 
 //Wallet
 router.get('/wallet');
