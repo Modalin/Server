@@ -3,7 +3,7 @@ require('mongoose-double')(mongoose);
 
 const url = 'mongodb://localhost/modalin_database';
 
-mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
+mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify:false });
 const SchemaTypes = mongoose.Schema.Types;
 
 //Bussiness
@@ -12,19 +12,21 @@ const bussinesSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref:'Mitra'
       },
-      investor:
-        {
-          investor: {
-            invest_value: {
-              type: Number
-            },
-            total_unit: {
-              type: Number
-            },
-            type: mongoose.Types.ObjectId,
-            ref: 'Investor'
-          }
-        },
+     
+          investor: [
+          //   {
+          //   invest_value: {
+          //     type: Number
+          //   },
+          //   total_unit: {
+          //     type: Number
+          //   },
+          //   investor_id: {
+          //     type: mongoose.Types.ObjectId,
+          //   }
+          // }
+        ],
+        
       business_name: {
         type: String
       },
@@ -43,7 +45,10 @@ const bussinesSchema = new mongoose.Schema({
           type: String
         }
       },
-      unit_business: {
+      periode: {
+        type: Number
+      },
+      business_unit: {
         type: Number
       },
       value_per_unit: {
