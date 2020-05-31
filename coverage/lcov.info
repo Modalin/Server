@@ -71,6 +71,7 @@ FN:8,(anonymous_0)
 FN:11,(anonymous_1)
 FN:44,(anonymous_2)
 FN:58,(anonymous_3)
+<<<<<<< HEAD
 FN:79,(anonymous_4)
 FN:84,(anonymous_5)
 FN:87,(anonymous_6)
@@ -81,11 +82,15 @@ FN:105,(anonymous_10)
 FN:109,(anonymous_11)
 FN:113,(anonymous_12)
 FNF:13
+=======
+FNF:4
+>>>>>>> ef2946ba5a38586fdc2ec31068bb862453109e62
 FNH:4
 FNDA:3,(anonymous_0)
 FNDA:3,(anonymous_1)
 FNDA:1,(anonymous_2)
 FNDA:1,(anonymous_3)
+<<<<<<< HEAD
 FNDA:0,(anonymous_4)
 FNDA:0,(anonymous_5)
 FNDA:0,(anonymous_6)
@@ -98,6 +103,11 @@ FNDA:0,(anonymous_12)
 DA:1,2
 DA:2,2
 DA:3,2
+=======
+DA:1,1
+DA:2,1
+DA:3,1
+>>>>>>> ef2946ba5a38586fdc2ec31068bb862453109e62
 DA:9,3
 DA:10,3
 DA:11,3
@@ -141,17 +151,13 @@ FN:8,(anonymous_0)
 FN:11,(anonymous_1)
 FN:44,(anonymous_2)
 FN:57,(anonymous_3)
-FN:78,(anonymous_4)
-FN:82,(anonymous_5)
-FN:87,(anonymous_6)
-FN:91,(anonymous_7)
-FN:95,(anonymous_8)
-FNF:9
+FNF:4
 FNH:4
 FNDA:3,(anonymous_0)
 FNDA:3,(anonymous_1)
 FNDA:1,(anonymous_2)
 FNDA:1,(anonymous_3)
+<<<<<<< HEAD
 FNDA:0,(anonymous_4)
 FNDA:0,(anonymous_5)
 FNDA:0,(anonymous_6)
@@ -160,6 +166,11 @@ FNDA:0,(anonymous_8)
 DA:1,2
 DA:2,2
 DA:3,2
+=======
+DA:1,1
+DA:2,1
+DA:3,1
+>>>>>>> ef2946ba5a38586fdc2ec31068bb862453109e62
 DA:9,3
 DA:10,3
 DA:11,3
@@ -210,16 +221,22 @@ end_of_record
 TN:
 SF:helpers\jwt.js
 FN:3,generateToken
-FN:7,verifyToken
-FNF:2
+FNF:1
 FNH:1
 FNDA:2,generateToken
+<<<<<<< HEAD
 FNDA:0,verifyToken
 DA:1,2
 DA:4,2
 DA:8,0
 DA:11,2
 LF:4
+=======
+DA:1,1
+DA:4,2
+DA:11,1
+LF:3
+>>>>>>> ef2946ba5a38586fdc2ec31068bb862453109e62
 LH:3
 BRF:0
 BRH:0

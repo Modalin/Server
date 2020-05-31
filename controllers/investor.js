@@ -1,4 +1,4 @@
-const { Investor } = require('../config');
+const { Investor, Business } = require('../config');
 const { encrypt, decrypt } = require('../helpers/bcrypt');
 const { generateToken } = require('../helpers/jwt');
 
@@ -111,6 +111,7 @@ class InvestorController {
 
     Investor.findById(id)
       .then(investor => {
+        // investor.wallet.incomePersentase = (investor.wallet.income / (investor.wallet.saldo - investor.wallet.income)) * 100;
         return res.status(200).json(investor.wallet);
       })
       .catch(err => {
@@ -118,13 +119,49 @@ class InvestorController {
       })
   }
 
-  static editWallet() {
-    const { saldo, income } = req.body;
+  static editWalletSaldo() {
+    const { saldo } = req.body;
     const id = req.user_id;
 
-    Investor.findOneAndUpdate({ _id: id }, { saldo, income }, { new: true, runValidators: true })
+    Investor.findOneAndUpdate({ _id: id }, { saldo }, { new: true, runValidators: true })
       .then(investor => {
         return res.status(200).json(investor.wallet);
+      })
+      .catch(err => {
+        return next(err);
+      })
+  }
+
+  //Business
+  static showAllBusiness(req, res, next) {
+    Business.find()
+      .then(business => {
+        const investorIncome = 0;
+        business.map(el => {
+          if (el.investor.investorId === req.user_id) {
+            //Sharing results formula
+            const sharing = (el.investor.total_unit / el.unit_business) * 100;
+            //Investor income formula
+            investorIncome += (sharing * el.total_profit);
+          }
+        })
+        Investor.findByIdAndUpdate(req.user_id, { wallet: { ...wallet, income: investorIncome } })
+          .then( _ => {
+            return res.status(200).json(business);
+          })
+          .catch(err => {
+            return next(err);
+          })
+      })
+      .catch(err => {
+        return next(err);
+      })
+  }
+
+  static showInvestorBusiness(req, res, next) {
+    Business.find({ investor: { investorId: req.user_id } })
+      .then(docs => {
+        return res.status(200).json(docs);
       })
       .catch(err => {
         return next(err);

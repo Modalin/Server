@@ -14,9 +14,9 @@ router.delete('/:id', ControllerInvestor.deleteProfile);
 
 //Wallet
 router.get('/wallet/', ControllerInvestor.showWallet);
-router.patch('/wallet/', ControllerInvestor.editWallet);
+router.patch('/wallet/', ControllerInvestor.editWalletSaldo);
 
 //Business
-router.get('/business');
-
+router.get('/business', ControllerInvestor.showAllBusiness);
+router.get('/invest')
 module.exports = router;
