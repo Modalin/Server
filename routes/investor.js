@@ -14,7 +14,7 @@ router.delete('/', InvestorAuth, ControllerInvestor.deleteProfile);
 router.use(InvestorAuth);
 
 //Wallet
-router.get('/wallet/', ControllerInvestor.showWallet);
+router.get('/wallet/:id', ControllerInvestor.showWallet);
 router.patch('/wallet/', ControllerInvestor.editWalletSaldo);
 
 //Business
