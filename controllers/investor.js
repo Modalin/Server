@@ -1,4 +1,4 @@
-const { Investor, Business } = require('../config');
+const { Investor, Business, Mitra } = require('../config');
 const { encrypt, decrypt } = require('../helpers/bcrypt');
 const { generateToken } = require('../helpers/jwt');
 
@@ -6,8 +6,6 @@ class InvestorController {
 
   //Authentication
   static async signIn(req, res) {
-    console.log('masuk server');
-    console.log(req.body);
     const { email, password } = req.body;
     try {
       await Investor.findOne({ email: email }).then((foundInvestor) => {
@@ -29,7 +27,8 @@ class InvestorController {
               address: foundInvestor.address,
               phone: foundInvestor.phone,
               job: foundInvestor.job,
-              document: foundInvestor.document
+              document: foundInvestor.document,
+              wallet: foundInvestor.wallet
             })
           } else {
             return res.status(400).json({
