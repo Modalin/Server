@@ -5,6 +5,7 @@ const { MitraAuth } = require('../middlewares/authentication');
 //Auth
 router.post('/signin', MitraController.signIn);
 router.post('/signup', MitraController.signUp);
+router.get('/business', MitraController.showBusiness);
 
 router.use(MitraAuth)
 // Profile
@@ -12,8 +13,9 @@ router.put('/:id');
 router.patch('/:id');
 router.delete('/:id');
 
+
 //Business
-router.get('/business', MitraController.showBusiness);
+
 router.post('/business', MitraController.createBusiness)
 router.put('/business/:id', MitraController.updateAllBusiness);
 
@@ -22,7 +24,6 @@ router.patch('/business/invest/:id', MitraController.addInvestor);
 
 //update total_profit
 router.patch('/business/profit/:id', MitraController.updateProfit);
-//
 
 // router.delete('/business/:id');
 
