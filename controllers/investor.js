@@ -75,7 +75,7 @@ class InvestorController {
     }
   }
 
-  // //Profile
+  //Profile
   // static editProfile() {
 
   // }
@@ -84,7 +84,7 @@ class InvestorController {
 
   // }
 
-  // //Wallet
+  //Wallet
   // static showWallet() {
 
   // }
