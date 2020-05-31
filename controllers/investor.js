@@ -18,9 +18,16 @@ class InvestorController {
             }
 
             const token = generateToken(payload);
-
+            console.log(foundInvestor)
             return res.status(200).json({
-              token
+              token,
+              id: foundInvestor._id,
+              name: foundInvestor.name,
+              photo_profile: foundInvestor.photo_profile,
+              email: foundInvestor.email,
+              phone: foundInvestor.phone,
+              job: foundInvestor.job,
+              document: foundInvestor.document
             })
           } else {
             return res.status(400).json({
