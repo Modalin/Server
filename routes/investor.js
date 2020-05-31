@@ -15,7 +15,7 @@ router.use(InvestorAuth);
 
 //Wallet
 router.get('/wallet/:id', ControllerInvestor.showWallet);
-router.patch('/wallet/', ControllerInvestor.editWalletSaldo);
+router.patch('/wallet', ControllerInvestor.editWalletSaldo);
 
 //Business
 router.get('/business/:id', ControllerInvestor.showAllBusiness);
