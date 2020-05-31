@@ -15,8 +15,15 @@ router.delete('/:id');
 //Business
 router.get('/business', MitraController.showBusiness);
 router.post('/business', MitraController.createBusiness)
-router.put('/business/:id', MitraController.updateBusiness);
-router.patch('/business/:id');
-router.delete('/business/:id');
+router.put('/business/:id', MitraController.updateAllBusiness);
+
+//add investor
+router.patch('/business/invest/:id', MitraController.addInvestor);
+
+//update total_profit
+router.patch('/business/profit/:id', MitraController.updateProfit);
+//
+
+// router.delete('/business/:id');
 
 module.exports = router;

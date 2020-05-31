@@ -4,7 +4,6 @@ require('mongoose-double')(mongoose);
 const url = 'mongodb://localhost/modalin_database';
 
 mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false });
-const SchemaTypes = mongoose.Schema.Types;
 
 //Bussiness
 const bussinesSchema = new mongoose.Schema({
@@ -43,7 +42,10 @@ const bussinesSchema = new mongoose.Schema({
           type: String
         }
       },
-      unit_business: {
+      periode: {
+        type: Number
+      },
+      business_unit: {
         type: Number
       },
       value_per_unit: {

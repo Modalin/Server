@@ -83,13 +83,27 @@ class InvestorController {
   }
 
   //Profile
-  static editProfile(req, res, next) {
-    const { name, email, phone } = req.body;
+  static showProfile(req, res, next) {
     const { id } = req.params;
 
-    Investor.findOneAndUpdate({ _id: id }, { name, email, phone }, { new: true, runValidators: true })
+    Investor.findById(id)
       .then(investor => {
-        return res.status(200).json(investor);
+        const { name, photo_profile, phone, address, job } = investor;
+        return res.status(200).json({ name, photo_profile, phone, address, job })
+      })
+      .catch(err => {
+        return next(err);
+      })
+  }
+
+  static editProfile(req, res, next) {
+    const { name, photo_profile, phone, address, account_number, job } = req.body;
+    const { id } = req.params;
+
+    Investor.findByIdAndUpdate(id, { name, photo_profile, phone, address, wallet: { account_number }, job }, { new: true, runValidators: true })
+      .then(investor => {
+        const { name, photo_profile, phone, address, wallet, job } = investor;
+        return res.status(200).json({ name, photo_profile, phone, address, wallet, job });
       })
       .catch(err => {
         return next(err);
@@ -152,7 +166,7 @@ class InvestorController {
             investorIncome += (sharing * el.total_profit);
           }
         })
-        Investor.findByIdAndUpdate(req.user_id, { wallet: { ...wallet, income: investorIncome } })
+        Investor.findByIdAndUpdate(req.user_id, { wallet: { income: investorIncome } })
           .then( _ => {
             return res.status(200).json(business);
           })
