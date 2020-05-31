@@ -87,6 +87,7 @@ class MitraController {
 
   //Business
   static async showBusiness(req, res) {
+    console.log('masuk mitra');
     try {
       let result = await Business.find({});
       return res.status(200).json(result);

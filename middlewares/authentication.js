@@ -7,13 +7,13 @@ async function InvestorAuth(req, res, next) {
         await Investor.findById(req.decoded.id)
             .then(user => {
                 if (user) {
-                    next();
+                    req.user_id = user._id;
+                    return next();
                 } else {
                     return res.status(401).json({
                         message: "Sorry we don't recognize you"
                     })
                 }
-                return null
             })
             .catch(err => {
                 res.status(500).json(err)

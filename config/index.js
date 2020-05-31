@@ -3,7 +3,7 @@ require('mongoose-double')(mongoose);
 
 const url = 'mongodb://localhost/modalin_database';
 
-mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify:false });
+mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false });
 const SchemaTypes = mongoose.Schema.Types;
 
 //Bussiness
@@ -12,21 +12,19 @@ const bussinesSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref:'Mitra'
       },
-     
-          investor: [
-          //   {
-          //   invest_value: {
-          //     type: Number
-          //   },
-          //   total_unit: {
-          //     type: Number
-          //   },
-          //   investor_id: {
-          //     type: mongoose.Types.ObjectId,
-          //   }
-          // }
-        ],
-        
+      investor:
+      {
+        investorId: {
+          type: mongoose.Types.ObjectId,
+          ref: 'Investor'
+        },
+        invest_value: {
+          type: Number
+        },
+        total_unit: {
+          type: Number
+        }
+      },
       business_name: {
         type: String
       },
@@ -45,10 +43,7 @@ const bussinesSchema = new mongoose.Schema({
           type: String
         }
       },
-      periode: {
-        type: Number
-      },
-      business_unit: {
+      unit_business: {
         type: Number
       },
       value_per_unit: {
@@ -90,7 +85,7 @@ const mitraSchema = new mongoose.Schema({
       validator: function(v) {
         return /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(v);
       },
-      // message: props => `${props.value} is not a valid email!`
+      message: props => `${props.value} is not a valid email!`
     },
     required: [true, 'Email must be filled']
   },
@@ -141,7 +136,7 @@ const mitraSchema = new mongoose.Schema({
           validator: function(v) {
             return /\d+/g.test(v);
           },
-          // message: props => `${props.value} is not a valid numbers!`
+          message: props => `${props.value} is not a valid numbers!`
         }
       }
     },
@@ -171,7 +166,7 @@ const investorSchema = new mongoose.Schema({
       validator: function(v) {
         return /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(v);
       },
-      // message: props => `${props.value} is not a valid email!`
+      message: props => `${props.value} is not a valid email!`
     },
     required: [true, 'Email must be filled']
   },
@@ -191,8 +186,14 @@ const investorSchema = new mongoose.Schema({
     required: [true, 'Password must be filled']
   },
   phone: {
-    type: Number,
-    required: [true, 'Phone Number must be filled']
+    type: String,
+    required: [true, 'Phone Number must be filled'],
+    validate: {
+      validator: function(v) {
+        return /\d+/g.test(v);
+      },
+      message: props => `${props.value} is not a valid numbers!`
+    }
   },
   document: {
     KTP: {
@@ -217,7 +218,7 @@ const investorSchema = new mongoose.Schema({
           validator: function(v) {
             return /\d+/g.test(v);
           },
-          // message: props => `${props.value} is not a valid numbers!`
+          message: props => `${props.value} is not a valid numbers!`
         }
       }
     }
@@ -236,16 +237,29 @@ const investorSchema = new mongoose.Schema({
         validator: function(v) {
           return /\d+/g.test(v);
         },
-        // message: props => `${props.value} is not a valid numbers!`
+        message: props => `${props.value} is not a valid numbers!`
       }
     },
     saldo: {
-      type: Number
+      type: Number,
+      default: 0
     },
     income: {
-      type: Number
+      type: Number,
+      default: 0
+    },
+    incomePersentase: {
+      type: mongoose.Schema.Types.Double,
+      default: 0
     }
   }
+});
+
+investorSchema.pre('findOneAndUpdate', function (next, docs) {
+  if (this._update.income) {
+    this._update.$set.incomePersentase = (this._update.income / (this._update.saldo - this._update.income)) * 100;
+  }
+  next();
 });
 
 const Investor = mongoose.model('Investors', investorSchema);

@@ -8,5 +8,9 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
 app.use('/', router);
+app.use((err, req, res, next) => {
+  console.log(err)
+  return res.status(500).json(err);
+});
 
 module.exports = app;
