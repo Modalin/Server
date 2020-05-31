@@ -18,7 +18,6 @@ class InvestorController {
             }
 
             const token = generateToken(payload);
-            console.log(foundInvestor)
             return res.status(200).json({
               token,
               id: foundInvestor._id,
@@ -100,7 +99,7 @@ class InvestorController {
     const { name, photo_profile, phone, address, account_number, job } = req.body;
     const { id } = req.user_id;
 
-    Investor.findByIdAndUpdate(id, { name, photo_profile, phone, address, wallet: { account_number }, job }, { new: true, runValidators: true })
+    Investor.findByIdAndUpdate(id, { name, photo_profile, phone, address, $set: { 'wallet.account_number': account_number }, job }, { new: true, runValidators: true })
       .then(investor => {
         const { name, photo_profile, phone, address, wallet, job } = investor;
         return res.status(200).json({ name, photo_profile, phone, address, wallet, job });
@@ -140,11 +139,11 @@ class InvestorController {
       })
   }
 
-  static editWalletSaldo() {
+  static editWalletSaldo(req, res, next) {
     const { saldo } = req.body;
     const id = req.user_id;
 
-    Investor.findOneAndUpdate({ _id: id }, { saldo }, { new: true, runValidators: true })
+    Investor.findByIdAndUpdate(id, { $set: { 'wallet.saldo': saldo } }, { new: true, runValidators: true })
       .then(investor => {
         return res.status(200).json(investor.wallet);
       })
@@ -155,7 +154,7 @@ class InvestorController {
 
   //Business
   static showAllBusiness(req, res, next) {
-    Business.find()
+    Business.find({})
       .then(business => {
         const investorIncome = 0;
         business.map(el => {
@@ -166,7 +165,7 @@ class InvestorController {
             investorIncome += (sharing * el.total_profit);
           }
         })
-        Investor.findByIdAndUpdate(req.user_id, { wallet: { income: investorIncome } })
+        Investor.findByIdAndUpdate(req.user_id, { $set: { 'wallet.income': investorIncome } })
           .then( _ => {
             return res.status(200).json(business);
           })
@@ -180,12 +179,38 @@ class InvestorController {
   }
 
   static showInvestorBusiness(req, res, next) {
-    Business.find({ investor: { investorId: req.user_id } })
+    const ObjectID = require('mongodb').ObjectID;
+
+    Business.find({ 'investor.investorid': ObjectID(req.user_id) })
       .then(docs => {
         return res.status(200).json(docs);
       })
       .catch(err => {
         return next(err);
+      })
+  }
+
+  static investToBusiness(req, res, next) {
+    const { invest_value, total_unit } = req.body;
+    const { id } = req.params;
+    const investorId = req.user_id;
+
+    Business.findById(id)
+      .then(result => {
+        if (result.investor.findIndex(el => el.investorId.toString() == investorId) >= 0) {
+          return res.status(400).json({ message: 'Investor already exists' });
+        } else {
+          Business.findByIdAndUpdate(id, { $push: { investor: { investorId, invest_value, total_unit } }, business_unit: result.business_unit - total_unit })
+            .then(result => {
+              return res.status(200).json({ message: 'Success invest' });
+            })
+            .catch(err => {
+              next(err);
+            })
+        }
+      })
+      .catch(err => {
+        next(err);
       })
   }
 }

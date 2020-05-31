@@ -12,10 +12,10 @@ const bussinesSchema = new mongoose.Schema({
         ref:'Mitra'
       },
       investor:
-      {
+      [{
         investorId: {
           type: mongoose.Types.ObjectId,
-          ref: 'Investor'
+          ref: 'Investors'
         },
         invest_value: {
           type: Number
@@ -23,7 +23,7 @@ const bussinesSchema = new mongoose.Schema({
         total_unit: {
           type: Number
         }
-      },
+      }],
       business_name: {
         type: String
       },
@@ -71,6 +71,14 @@ const bussinesSchema = new mongoose.Schema({
         enum: ['','Sedang Berjalan','Pendanaan Terpenuhi']
       }
     })
+
+// bussinesSchema.pre('find', function (next, docs) {
+//   console.log(this._find)
+//   // if (this._update.income) {
+//   //   this._update.$set.incomePersentase = (this._update.income / (this._update.saldo - this._update.income)) * 100;
+//   // }
+//   next();
+// });
 
 const Business = mongoose.model('Business', bussinesSchema);
 
@@ -257,12 +265,12 @@ const investorSchema = new mongoose.Schema({
   }
 });
 
-investorSchema.pre('findOneAndUpdate', function (next, docs) {
-  if (this._update.income) {
-    this._update.$set.incomePersentase = (this._update.income / (this._update.saldo - this._update.income)) * 100;
-  }
-  next();
-});
+// investorSchema.pre('findOneAndUpdate', function (next, docs) {
+//   if (this._update.income) {
+//     this._update.$set.incomePersentase = (this._update.income / (this._update.saldo - this._update.income)) * 100;
+//   }
+//   next();
+// });
 
 const Investor = mongoose.model('Investors', investorSchema);
 
