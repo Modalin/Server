@@ -18,5 +18,6 @@ router.patch('/wallet/', ControllerInvestor.editWalletSaldo);
 
 //Business
 router.get('/business', ControllerInvestor.showAllBusiness);
-router.get('/invest')
+router.get('/invest', ControllerInvestor.showInvestorBusiness);
+
 module.exports = router;
