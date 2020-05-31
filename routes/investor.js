@@ -6,12 +6,13 @@ const { InvestorAuth } = require('../middlewares/authentication');
 router.post('/signin', ControllerInvestor.signIn);
 router.post('/signup', ControllerInvestor.signUp);
 
-router.use(InvestorAuth);
 
 //Profile
-router.get('/:id', ControllerInvestor.editProfile);
-router.patch('/:id', ControllerInvestor.editProfile);
-router.delete('/:id', ControllerInvestor.deleteProfile);
+router.get('/:id', ControllerInvestor.showProfile);
+router.patch('/', InvestorAuth, ControllerInvestor.editProfile);
+router.delete('/', InvestorAuth, ControllerInvestor.deleteProfile);
+
+router.use(InvestorAuth);
 
 //Wallet
 router.get('/wallet/', ControllerInvestor.showWallet);

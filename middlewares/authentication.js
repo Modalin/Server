@@ -14,7 +14,6 @@ async function InvestorAuth(req, res, next) {
                         message: "Sorry we don't recognize you"
                     })
                 }
-                return null
             })
             .catch(err => {
                 res.status(500).json(err)
@@ -35,11 +34,10 @@ async function MitraAuth(req, res, next) {
                    req.mitraId = user._id
                    return next();
                 } else {
-                    res.status(401).json({
+                    return res.status(401).json({
                         message: "Sorry we don't recognize you"
                     })
                 }
-                return null
             })
             .catch(err => {
                 return res.status(500).json(err)

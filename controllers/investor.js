@@ -98,7 +98,7 @@ class InvestorController {
 
   static editProfile(req, res, next) {
     const { name, photo_profile, phone, address, account_number, job } = req.body;
-    const { id } = req.params;
+    const { id } = req.user_id;
 
     Investor.findByIdAndUpdate(id, { name, photo_profile, phone, address, wallet: { account_number }, job }, { new: true, runValidators: true })
       .then(investor => {
@@ -111,7 +111,7 @@ class InvestorController {
   }
 
   static deleteProfile(req, res, next) {
-    const { id } = req.params;
+    const { id } = req.user_id;
 
     Investor.findOneAndRemove({ _id: id })
       .then(investor => {
