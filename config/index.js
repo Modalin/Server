@@ -257,10 +257,6 @@ const investorSchema = new mongoose.Schema({
     income: {
       type: Number,
       default: 0
-    },
-    incomePersentase: {
-      type: mongoose.Schema.Types.Double,
-      default: 0
     }
   }
 });
