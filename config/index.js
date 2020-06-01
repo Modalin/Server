@@ -42,7 +42,7 @@ const bussinesSchema = new mongoose.Schema({
           type: String
         }
       },
-      unit_business: {
+      business_unit: {
         type: Number
       },
       value_per_unit: {
@@ -66,6 +66,9 @@ const bussinesSchema = new mongoose.Schema({
       status: {
         type: String,
         enum: ['','Sedang Berjalan','Pendanaan Terpenuhi']
+      },
+      profit_times: {
+        type: Number
       }
     })
 
@@ -253,10 +256,6 @@ const investorSchema = new mongoose.Schema({
     },
     income: {
       type: Number,
-      default: 0
-    },
-    incomePersentase: {
-      type: mongoose.Schema.Types.Double,
       default: 0
     }
   }
