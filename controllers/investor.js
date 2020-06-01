@@ -83,7 +83,7 @@ class InvestorController {
 
   //Profile
   static showProfile(req, res, next) {
-    const { id } = req.params;
+    const { id } = req.query;
 
     Investor.findById(id)
       .then(investor => {
