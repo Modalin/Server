@@ -200,7 +200,7 @@ class InvestorController {
         if (result.investor.findIndex(el => el.investorId.toString() == investorId) >= 0) {
           return res.status(400).json({ message: 'Investor already exists' });
         } else {
-          Business.findByIdAndUpdate(id, { $push: { investor: { investorId, invest_value, total_unit } }, business_unit: result.business_unit - total_unit })
+          Business.findByIdAndUpdate(id, { $push: { investor: { investorId, invest_value, total_unit }}, business_unit: result.business_unit - total_unit })
             .then(result => {
               return res.status(200).json({ message: 'Success invest' });
             })
