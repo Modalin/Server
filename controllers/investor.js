@@ -178,15 +178,15 @@ class InvestorController {
         invest.map(el => {
           const result = el.investor.find(investor => investor.investorId.toString() == req.user_id)
           if (result) {
-            //Sharing results formula
-            const sharing = (result.total_unit / el.business_unit) * 100;
             //Investor income formula
-            investorIncome += (sharing * el.total_profit);
+            investorIncome += result.investor_profit;
           }
         })
         if (investorIncome) {
           Investor.findByIdAndUpdate(req.user_id, { $set: { 'wallet.income': investorIncome } })
             .then( result => {
+              result.wallet.incomePersentase = (result.wallet.income / result.wallet.saldo) * 100;
+              result.save();
               return res.status(200).json(invest);
             })
             .catch(err => {
@@ -209,16 +209,24 @@ class InvestorController {
     Business.findById(id)
       .then(result => {
         if (result) {
-          if (result.investor.findIndex(el => el.investorId.toString() == investorId) >= 0) {
-            return res.status(400).json({ message: 'Investor already exists' });
+          if (result.business_unit > 0 && total_unit <= result.business_unit) {
+            if (result.investor.findIndex(el => el.investorId.toString() == investorId) >= 0) {
+              return res.status(400).json({ message: 'Investor already exists' });
+            } else {
+              Business.findByIdAndUpdate(id, { $push: { investor: { investorId, invest_value, total_unit } }, business_unit: result.business_unit - total_unit })
+                .then(result => {
+                  if (result.business_unit == total_unit) {
+                    result.status = 'Pendanaan Terpenuhi';
+                    result.save();
+                  }
+                  return res.status(200).json({ message: 'Success invest' });
+                })
+                .catch(err => {
+                  next(err);
+                })
+            }
           } else {
-            Business.findByIdAndUpdate(id, { $push: { investor: { investorId, invest_value, total_unit } }, business_unit: result.business_unit - total_unit })
-              .then(result => {
-                return res.status(200).json({ message: 'Success invest' });
-              })
-              .catch(err => {
-                next(err);
-              })
+            return res.status(400).json({ message: 'Business unit is not enough'});
           }
         } else {
           return res.status(400).json({ message: 'Business not found'});

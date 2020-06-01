@@ -240,13 +240,18 @@ class MitraController {
       const filter = {_id: mongoose.Types.ObjectId(id)}
       const data = {total_profit: profit}
 
-      await Business.findOneAndUpdate(filter, data, {
+      const business = await Business.findOneAndUpdate(filter, data, {
         new: true
       })
+      if (business.investor[0]) {
+        business.investor.map(investor => {
+          investor.investor_profit = (investor.total_unit / business.business_unit) * profit;
+        })
+        business.save();
+      }
       res.status(201).json({
         message: 'success update Profit'
       })
-
     } catch(err){
       return res.status(500).json({
         message: "something wrong",
