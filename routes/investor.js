@@ -8,13 +8,13 @@ router.post('/signup', ControllerInvestor.signUp);
 
 //Profile
 router.get('/:id', ControllerInvestor.showProfile);
-// router.patch('/', InvestorAuth, ControllerInvestor.editProfile);
-// router.delete('/', InvestorAuth, ControllerInvestor.deleteProfile);
+router.patch('/', InvestorAuth, ControllerInvestor.editProfile);
+router.delete('/', InvestorAuth, ControllerInvestor.deleteProfile);
 
 router.use(InvestorAuth);
 
 //Wallet
-router.get('/wallet', ControllerInvestor.showWallet);
+router.get('/wallet/:id', ControllerInvestor.showWallet);
 router.patch('/wallet', ControllerInvestor.editWalletSaldo);
 
 //Business
