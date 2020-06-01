@@ -251,7 +251,6 @@ class MitraController {
       res.status(201).json({
         message: 'success update Profit'
       })
-
     } catch(err){
       return res.status(500).json({
         message: "something wrong",

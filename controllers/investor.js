@@ -181,7 +181,6 @@ class InvestorController {
             .then( result => {
               result.wallet.incomePersentase = (result.wallet.income / result.wallet.saldo) * 100;
               result.save();
-              console.log(result)
               return res.status(200).json(invest);
             })
             .catch(err => {
@@ -224,17 +223,7 @@ class InvestorController {
             return res.status(400).json({ message: 'Business unit is not enough'});
           }
         } else {
-<<<<<<< HEAD
-          Business.findByIdAndUpdate(id, { $push: { investor: { investorId, invest_value, total_unit }}, business_unit: result.business_unit - total_unit })
-            .then(result => {
-              return res.status(200).json({ message: 'Success invest' });
-            })
-            .catch(err => {
-              next(err);
-            })
-=======
           return res.status(400).json({ message: 'Business not found'});
->>>>>>> dbe2697439ad0e57577b5c57d38aef45fd4779b6
         }
       })
       .catch(err => {
