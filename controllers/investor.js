@@ -196,7 +196,7 @@ class InvestorController {
   }
 
   static investToBusiness(req, res, next) {
-    const { invest_value, total_unit } = req.body;
+    const { invest_value, total_unit, reports } = req.body;
     const { id } = req.params;
     const investorId = req.user_id;
 
@@ -207,7 +207,7 @@ class InvestorController {
             if (result.investor.findIndex(el => el.investorId.toString() == investorId) >= 0) {
               return res.status(400).json({ message: 'Investor already exists' });
             } else {
-              Business.findByIdAndUpdate(id, { $push: { investor: { investorId, invest_value, total_unit } }, business_unit: result.business_unit - total_unit })
+              Business.findByIdAndUpdate(id, { $push: { investor: { investorId, invest_value, total_unit, reports } }, business_unit: result.business_unit - total_unit })
                 .then(result => {
                   if (result.business_unit == total_unit) {
                     result.status = 'Pendanaan Terpenuhi';

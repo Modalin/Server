@@ -25,6 +25,9 @@ const bussinesSchema = new mongoose.Schema({
         },
         investor_profit: {
           type: mongoose.Schema.Types.Double
+        },
+        reports: {
+          type: String
         }
       }],
       business_name: {
