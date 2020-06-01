@@ -111,7 +111,8 @@ class MitraController {
       image_360,
       status,
       total_profit,
-      periode
+      periode,
+      profit_times,
     } = req.body;
     const mitra = req.mitraId;
     let data = {
@@ -133,7 +134,8 @@ class MitraController {
       persentase_value,
       total_profit,
       status,
-      periode
+      periode,
+      profit_times,
     };
 
     try {
@@ -161,7 +163,8 @@ class MitraController {
       business_description,
       image_360,
       status,
-      periode
+      periode,
+      profit_times,
     } = req.body;
     const mitra = req.params.id;
     try {
@@ -180,7 +183,8 @@ class MitraController {
         total_profit,
         persentase_value,
         status,
-        periode
+        periode,
+        profit_times,
       };
       let result = await Business.findOneAndUpdate(filter, data, {
         new: true,
