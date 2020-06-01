@@ -8,6 +8,7 @@ router.post('/signup', MitraController.signUp);
 router.get('/business', MitraController.showBusiness);
 
 router.use(MitraAuth)
+
 // Profile
 router.put('/:id');
 router.patch('/:id');

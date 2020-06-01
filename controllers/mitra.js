@@ -138,7 +138,7 @@ class MitraController {
     };
 
     try {
-       await Business.create(data);
+      await Business.create(data);
       return res.status(201).json({
         message: "success create bussiness",
       });

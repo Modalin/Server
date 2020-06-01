@@ -2,12 +2,14 @@ const { verifyToken } = require('../helpers/jwt');
 const { Investor, Mitra } = require('../config');
 
 async function InvestorAuth(req, res, next) {
+    console.log('masuk auth investor');
     try {
-        req.decoded = verifyToken(req.headers.token);
-        await Investor.findById(req.decoded.id)
+        let decoded = verifyToken(req.headers.token);
+        await Investor.findById(decoded.id)
             .then(user => {
                 if (user) {
                     req.user_id = user._id;
+                    console.log(req.user_id);
                     return next();
                 } else {
                     return res.status(401).json({
@@ -34,11 +36,10 @@ async function MitraAuth(req, res, next) {
                    req.mitraId = user._id
                    return next();
                 } else {
-                    res.status(401).json({
+                    return res.status(401).json({
                         message: "Sorry we don't recognize you"
                     })
                 }
-                return null
             })
             .catch(err => {
                 return res.status(500).json(err)
