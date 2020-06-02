@@ -50,6 +50,8 @@ class InvestorController {
   }
 
   static async signUp(req, res) {
+    console.log('masuk server');
+    console.log(req.body);
     const { name, email, address, photo_profile, job, password, document, phone, wallet } = req.body;
     const inputData = { 
       name, 
