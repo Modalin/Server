@@ -48,9 +48,6 @@ const bussinesSchema = new mongoose.Schema({
           type: String
         }
       },
-      periode: {
-        type: Number
-      },
       business_unit: {
         type: Number
       },
@@ -75,6 +72,12 @@ const bussinesSchema = new mongoose.Schema({
       status: {
         type: String,
         enum: ['','Sedang Berjalan','Pendanaan Terpenuhi']
+      },
+      profit_times: {
+        type: Number
+      },
+      periode: {
+        type: Number
       }
     })
 
@@ -120,6 +123,15 @@ const mitraSchema = new mongoose.Schema({
     type: Number,
     required: [true, 'Phone Number must be filled']
   },
+  bank_name: {
+    type: String
+  },
+  bank_account: {
+    type: String,
+  },
+  account_number: {
+    type: Number,
+  },
   document: {
     KTP: {
       url: {
@@ -164,7 +176,7 @@ const mitraSchema = new mongoose.Schema({
         type: Number
       }
     }
-  },
+  }
 });
 
 const Mitra = mongoose.model('Mitra', mitraSchema);

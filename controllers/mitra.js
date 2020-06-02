@@ -41,6 +41,8 @@ class MitraController {
   }
 
   static async signUp(req, res) {
+    console.log('masuk register');
+    console.log(req.body);
     const {
       name,
       email,
@@ -49,6 +51,9 @@ class MitraController {
       photo_profile,
       phone,
       document,
+      bank_name,
+      bank_account,
+      account_number
     } = req.body;
     const inputData = {
       name,
@@ -58,6 +63,9 @@ class MitraController {
       photo_profile,
       phone,
       document,
+      bank_name,
+      bank_account,
+      account_number
     };
     try {
       await Mitra.create(inputData).then((response) => {
@@ -67,6 +75,9 @@ class MitraController {
           address: response.address,
           photo_profile: response.photo_profile,
           phone: response.phone,
+          bank_name,
+          bank_account,
+          account_number,
           document: response.document,
         });
       });
@@ -87,6 +98,7 @@ class MitraController {
 
   //Business
   static async showBusiness(req, res) {
+    console.log('masuk mitra');
     try {
       let result = await Business.find({});
       return res.status(200).json(result);
@@ -108,7 +120,7 @@ class MitraController {
       business_value,
       persentase_value,
       business_description,
-      image_360,
+      images_360,
       status,
       total_profit,
       periode,
@@ -130,7 +142,7 @@ class MitraController {
       value_per_unit,
       business_value,
       business_description,
-      image_360,
+      images_360,
       persentase_value,
       total_profit,
       status,
@@ -138,11 +150,14 @@ class MitraController {
       profit_times,
     };
 
+
     try {
-       await Business.create(data);
-      return res.status(201).json({
-        message: "success create bussiness",
-      });
+      console.log('masuk try');
+      await Business.create(data).then(() => {
+        return res.status(201).json({
+          message: "success create bussiness",
+        });
+      })
     } catch (err) {
 
       return res.status(500).json({
@@ -161,7 +176,7 @@ class MitraController {
       business_value,
       persentase_value,
       business_description,
-      image_360,
+      images_360,
       status,
       periode,
       profit_times,
@@ -179,7 +194,7 @@ class MitraController {
         value_per_unit,
         business_value,
         business_description,
-        image_360,
+        images_360,
         total_profit,
         persentase_value,
         status,
