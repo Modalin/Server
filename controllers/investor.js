@@ -1,6 +1,6 @@
 const { Investor, Business, Mitra } = require('../config');
 const { encrypt, decrypt } = require('../helpers/bcrypt');
-const { generateToken } = require('../helpers/jwt');
+const { generateToken, verifyToken } = require('../helpers/jwt');
 
 class InvestorController {
 
@@ -86,12 +86,15 @@ class InvestorController {
 
   //Profile
   static showProfile(req, res, next) {
-    const { id } = req.query;
 
-    Investor.findById(id)
+    const decoded = verifyToken(req.headers.token)
+
+    Investor.findById(decoded.id)
       .then(investor => {
-        const { name, photo_profile, phone, address, job } = investor;
-        return res.status(200).json({ name, photo_profile, phone, address, job })
+        console.log(investor);
+        const { name, email, address, job, phone, photo_profile, document, wallet } = investor;
+        const data = { name, email, address, job, phone, photo_profile, document, wallet };
+        return res.status(200).json(data)
       })
       .catch(err => {
         return next(err);
@@ -99,13 +102,17 @@ class InvestorController {
   }
 
   static editProfile(req, res, next) {
-    const { name, photo_profile, phone, address, account_number, job } = req.body;
-    const { id } = req.user_id;
+    console.log('masuk edit server');
+    const { name, photo_profile, phone, address, wallet, job } = req.body;
+    const decoded = verifyToken(req.headers.token)
 
-    Investor.findByIdAndUpdate(id, { name, photo_profile, phone, address, $set: { 'wallet.account_number': account_number }, job }, { new: true, runValidators: true })
+    Investor.findByIdAndUpdate(decoded.id, { name, photo_profile, phone, address, $set: { 'wallet.account_number': wallet.account_number }, job }, { new: true, runValidators: true })
       .then(investor => {
-        const { name, photo_profile, phone, address, wallet, job } = investor;
-        return res.status(200).json({ name, photo_profile, phone, address, wallet, job });
+        const { name, email, address, job, phone, photo_profile, document, wallet } = investor;
+        const data = { name, email, address, job, phone, photo_profile, document, wallet };
+        console.log('ini hasil edit');
+        console.log(data);
+        return res.status(200).json(data);
       })
       .catch(err => {
         return next(err);
@@ -130,11 +137,8 @@ class InvestorController {
 
   //Wallet
   static showWallet(req, res) {
-    console.log('ini req');
-    console.log('masuk wallet');
     const id = req.user_id;
     console.log(id);
-    console.log(req);
     Investor.findById(id)
       .then(investor => {
         // investor.wallet.incomePersentase = (investor.wallet.income / (investor.wallet.saldo - investor.wallet.income)) * 100;
