@@ -41,6 +41,8 @@ class MitraController {
   }
 
   static async signUp(req, res) {
+    console.log('masuk register');
+    console.log(req.body);
     const {
       name,
       email,
@@ -49,6 +51,9 @@ class MitraController {
       photo_profile,
       phone,
       document,
+      bank_name,
+      bank_account,
+      account_number
     } = req.body;
     const inputData = {
       name,
@@ -58,6 +63,9 @@ class MitraController {
       photo_profile,
       phone,
       document,
+      bank_name,
+      bank_account,
+      account_number
     };
     try {
       await Mitra.create(inputData).then((response) => {
@@ -67,6 +75,9 @@ class MitraController {
           address: response.address,
           photo_profile: response.photo_profile,
           phone: response.phone,
+          bank_name,
+          bank_account,
+          account_number,
           document: response.document,
         });
       });
@@ -139,11 +150,14 @@ class MitraController {
       profit_times,
     };
 
+
     try {
-      await Business.create(data);
-      return res.status(201).json({
-        message: "success create bussiness",
-      });
+      console.log('masuk try');
+      await Business.create(data).then(() => {
+        return res.status(201).json({
+          message: "success create bussiness",
+        });
+      })
     } catch (err) {
 
       return res.status(500).json({

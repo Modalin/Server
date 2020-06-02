@@ -72,6 +72,9 @@ const bussinesSchema = new mongoose.Schema({
       },
       profit_times: {
         type: Number
+      },
+      periode: {
+        type: Number
       }
     })
 
@@ -116,6 +119,15 @@ const mitraSchema = new mongoose.Schema({
   phone: {
     type: Number,
     required: [true, 'Phone Number must be filled']
+  },
+  bank_name: {
+    type: String
+  },
+  bank_account: {
+    type: String,
+  },
+  account_number: {
+    type: Number,
   },
   document: {
     KTP: {
