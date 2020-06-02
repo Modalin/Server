@@ -257,9 +257,33 @@ class MitraController {
       });
     }
   }
+
+  static async createReport(req, res){
+    const { report } =  req.body
+    const { id } = req.params
+
+    try {
+      const filter = {_id: mongoose.Types.ObjectId(id)}
+      const data = {$push: {report: report}}
+      
+      await Business.findOneAndUpdate(filter, data, {
+        new: true
+      })
+
+      res.status(201).json({
+        message: 'success create report'
+      })
+    } catch(err) {
+      return res.status(500).json({
+        message: "something wrong",
+      });
+    }
+
+  }
   // static async deleteBusiness() {
 
   // }
+
 }
 
 module.exports = MitraController;

@@ -75,7 +75,9 @@ const bussinesSchema = new mongoose.Schema({
       status: {
         type: String,
         enum: ['','Sedang Berjalan','Pendanaan Terpenuhi']
-      }
+      },
+      report: []
+
     })
 
 // bussinesSchema.pre('find', function (next, docs) {

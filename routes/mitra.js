@@ -25,6 +25,9 @@ router.patch('/business/invest/:id', MitraController.addInvestor);
 //update total_profit
 router.patch('/business/profit/:id', MitraController.updateProfit);
 
+//add report
+router.patch('/bussiness/report/:id', MitraController.createReport)
+
 // router.delete('/business/:id');
 
 module.exports = router;
