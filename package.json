@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "jest --coverage --detectOpenHandles --runInBand",
-    "dev": "NODE_ENV=development nodemon bin/server.js"
+    "dev": "NODE_ENV=development nodemon bin/server.js",
+    "start": "node bin/server.js"
   },
   "repository": {
     "type": "git",

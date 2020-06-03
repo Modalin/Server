@@ -7,22 +7,51 @@ describe('Investor service', () => {
     email: 'investor1@mail.com',
     password: '123'
   }
-  const investorId = '/1';
+  const investorId = '1';
   const baseUrl = 'localhostt:3000/investor';
   const token = 'token';
 
   describe('Success services', () => {
-    describe('Success edit profile', () => {
+    describe('Success find investor', () => {
       test('should return new investor profile', () => {
         request(app)
-          .patch(baseUrl + investorId)
-          .set('token', token)
-          .send({ name: 'investor berhasil'})
+          .get(baseUrl + 'find/' + investorId)
           .end((err, res) => {
             if (err) {
               return done(err);
             }
-            expect(200, investorprofile);
+            expect(200, res);
+            return done();
+          })
+      })
+    })
+
+    describe('Success show investor', () => {
+      test('should return new investor profile', () => {
+        request(app)
+          .get(baseUrl)
+          .set('token', token)
+          .end((err, res) => {
+            if (err) {
+              return done(err);
+            }
+            expect(200, res);
+            return done();
+          })
+      })
+    })
+
+    describe('Success edit profile', () => {
+      test('should return new investor profile', () => {
+        request(app)
+          .patch(baseUrl)
+          .set('token', token)
+          .send({ name: 'investor berhasil'}) //send profile data
+          .end((err, res) => {
+            if (err) {
+              return done(err);
+            }
+            expect(200, res);
             return done();
           })
       })
@@ -31,13 +60,15 @@ describe('Investor service', () => {
     describe('Success delete profile', () => {
       test('should return message "Success deleted profile"', () => {
         request(app)
-          .patch(baseUrl + investorId)
+          .delete(baseUrl + investorId)
           .set('token', token)
           .end((err, res) => {
             if (err) {
               return done(err);
             }
             expect(200);
+            //200 { message: 'Success deleted profile' }
+            //404 { message: 'User profile not found' }
             expect({ message: 'Success deleted profile'});
             return done();
           })
@@ -47,31 +78,14 @@ describe('Investor service', () => {
     describe('Success fetch wallet', () => {
       test('should return wallet data', () => {
         request(app)
-          .get(baseUrl + '/wallet' + investorId)
+          .get(baseUrl + '/wallet')
           .set('token', token)
           .end((err, res) => {
             if (err) {
               return done(err);
             }
             expect(200);
-            expect(res.body).toHaveProperty('income');
-            return done();
-          })
-      })
-    })
-
-    describe('Success fetch wallet', () => {
-      test('should return wallet data', () => {
-        request(app)
-          .get(baseUrl + '/wallet' + investorId)
-          .set('token', token)
-          .end((err, res) => {
-            if (err) {
-              return done(err);
-            }
-            expect(200);
-            expect(res.body).toHaveProperty('income');
-            expect(res.body).toHaveProperty('saldo');
+            expect(res.body)
             return done();
           })
       })
