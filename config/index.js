@@ -73,10 +73,6 @@ const bussinesSchema = new mongoose.Schema({
         type: String,
         enum: ['','Sedang Berjalan','Pendanaan Terpenuhi']
       },
-<<<<<<< HEAD
-      report: []
-
-=======
       profit_times: {
         type: Number
       },
@@ -91,7 +87,6 @@ const bussinesSchema = new mongoose.Schema({
           type: Number
         }
       }
->>>>>>> development
     })
 
 // bussinesSchema.pre('find', function (next, docs) {
