@@ -48,9 +48,6 @@ const bussinesSchema = new mongoose.Schema({
           type: String
         }
       },
-      periode: {
-        type: Number
-      },
       business_unit: {
         type: Number
       },
@@ -76,8 +73,25 @@ const bussinesSchema = new mongoose.Schema({
         type: String,
         enum: ['','Sedang Berjalan','Pendanaan Terpenuhi']
       },
+<<<<<<< HEAD
       report: []
 
+=======
+      profit_times: {
+        type: Number
+      },
+      periode: {
+        type: Number
+      },
+      owner: {
+        name: {
+          type: String,
+        },
+        phone: {
+          type: Number
+        }
+      }
+>>>>>>> development
     })
 
 // bussinesSchema.pre('find', function (next, docs) {
@@ -121,6 +135,15 @@ const mitraSchema = new mongoose.Schema({
   phone: {
     type: Number,
     required: [true, 'Phone Number must be filled']
+  },
+  bank_name: {
+    type: String
+  },
+  bank_account: {
+    type: String,
+  },
+  account_number: {
+    type: Number,
   },
   document: {
     KTP: {
@@ -166,7 +189,7 @@ const mitraSchema = new mongoose.Schema({
         type: Number
       }
     }
-  },
+  }
 });
 
 const Mitra = mongoose.model('Mitra', mitraSchema);

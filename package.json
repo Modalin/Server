@@ -5,7 +5,12 @@
   "main": "app.js",
   "scripts": {
     "test": "jest --coverage --detectOpenHandles --runInBand",
+<<<<<<< HEAD
     "dev": "nodemon bin/server.js"
+=======
+    "dev": "NODE_ENV=development nodemon bin/server.js",
+    "start": "node bin/server.js"
+>>>>>>> development
   },
   "repository": {
     "type": "git",
