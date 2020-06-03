@@ -5,6 +5,7 @@ const { InvestorAuth } = require('../middlewares/authentication');
 //Authentication
 router.post('/signin', ControllerInvestor.signIn);
 router.post('/signup', ControllerInvestor.signUp);
+// router.get('/find/:id', ControllerInvestor.findInvestor)
 
 //Profile
 router.get('/', ControllerInvestor.showProfile);

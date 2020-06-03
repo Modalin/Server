@@ -10,13 +10,14 @@ router.get('/business', MitraController.showBusiness);
 router.use(MitraAuth)
 
 // Profile
+router.get('/:id', MitraController.getById);
 router.put('/:id');
 router.patch('/:id');
 router.delete('/:id');
 
 
 //Business
-
+router.get('/business/:id', MitraController.getBusinessByAuth)
 router.post('/business', MitraController.createBusiness)
 router.put('/business/:id', MitraController.updateAllBusiness);
 

@@ -49,6 +49,7 @@ class InvestorController {
     }
   }
 
+
   static async signUp(req, res) {
     console.log('masuk server');
     console.log(req.body);
@@ -81,6 +82,18 @@ class InvestorController {
     catch(err) {
       console.log(err);
       await res.status(400).json({
+        error: err.errors
+      })
+    }
+  }
+
+  static async findInvestor(req, res) {
+    let { id } = req.params;
+    try {
+      let response = await Investor.findById(id);
+      return res.status(200).json(response)
+    } catch (err) {
+      return res.status(404).json({
         error: err.errors
       })
     }

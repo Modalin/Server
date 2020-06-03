@@ -75,6 +75,14 @@ const bussinesSchema = new mongoose.Schema({
       },
       periode: {
         type: Number
+      },
+      owner: {
+        name: {
+          type: String,
+        },
+        phone: {
+          type: Number
+        }
       }
     })
 

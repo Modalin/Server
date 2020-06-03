@@ -21,6 +21,8 @@ class MitraController {
 
             return res.status(200).json({
               token,
+              id: foundMitra._id,
+              data: foundMitra
             });
           } else {
             return res.status(400).json({
@@ -89,6 +91,33 @@ class MitraController {
     }
   }
 
+  static async getById (req, res) {
+    let { id } = req.params;
+    try {
+      let response = await Mitra.findById(id);
+      return res.status(200).json(response)
+    } catch (err) {
+      res.status(404).json({
+        error: err.errors
+      })
+    }
+  }
+
+  static async getBusinessByAuth (req, res) {
+    console.log('masuk server business auth');
+    let { id } = req.params;
+    try {
+      let response = await Business.find({ mitra: id });
+      console.log('success bisnis auth');
+      console.log(response);
+      return res.status(200).json(response)
+    } catch (err) {
+      return res.status(404).json({
+        message: "Business Not Found !!",
+      });
+    }
+  }
+
   //Profile
   static async editProfile() {}
 
@@ -111,6 +140,7 @@ class MitraController {
 
 
   static async createBusiness(req, res) {
+    console.log(req);
     const {
       business_name,
       business_type,
@@ -124,35 +154,41 @@ class MitraController {
       status,
       total_profit,
       periode,
-      profit_times,
+      profit_times
     } = req.body;
     const mitra = req.mitraId;
-    let data = {
-      mitra,
-      business_name,
-      // investor: {
-      //   invest_value: 0,
-      //   total_unit: 0,
-      //   investor_id: null,
-      // },
-      investor: [],
-      business_type,
-      location,
-      business_unit,
-      value_per_unit,
-      business_value,
-      business_description,
-      images_360,
-      persentase_value,
-      total_profit,
-      status,
-      periode,
-      profit_times,
-    };
-
-
+    
     try {
-      console.log('masuk try');
+      console.log('ini mitra');
+      console.log(mitra);
+      let createMitra = await Mitra.findById({ _id: mitra})
+      console.log(createMitra);
+      let data = {
+        mitra,
+        business_name,
+        // investor: {
+        //   invest_value: 0,
+        //   total_unit: 0,
+        //   investor_id: null,
+        // },
+        investor: [],
+        business_type,
+        location,
+        business_unit,
+        value_per_unit,
+        business_value,
+        business_description,
+        images_360,
+        persentase_value,
+        total_profit,
+        status,
+        periode,
+        profit_times,
+        owner: {
+          name: createMitra.name,
+          phone: createMitra.phone
+        }
+      };
       await Business.create(data).then(() => {
         return res.status(201).json({
           message: "success create bussiness",
