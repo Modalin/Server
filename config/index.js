@@ -67,11 +67,13 @@ const bussinesSchema = new mongoose.Schema({
         type: String
       },
       total_profit: {
-        type: Number
+        type: Number,
+        default: 0
       },
       status: {
         type: String,
-        enum: ['','Sedang Berjalan','Pendanaan Terpenuhi']
+        enum: ['','Sedang Berjalan','Pendanaan Terpenuhi'],
+        default: ''
       },
       profit_times: {
         type: Number

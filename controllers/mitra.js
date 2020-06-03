@@ -111,6 +111,7 @@ class MitraController {
 
 
   static async createBusiness(req, res) {
+    console.log('masuk create business');
     const {
       business_name,
       business_type,
@@ -159,7 +160,7 @@ class MitraController {
         });
       })
     } catch (err) {
-
+      console.log(err)
       return res.status(500).json({
         message: "something wrong",
       });
