@@ -16,7 +16,7 @@ async function InvestorAuth(req, res, next) {
                 }
             })
             .catch(err => {
-                res.status(500).json(err)
+                next(err)
             })
     } catch(err) {
         return res.status(401).json({
