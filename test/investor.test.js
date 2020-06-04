@@ -423,7 +423,7 @@ describe('Investor', () => {
 
         test('should change business unit to 0 and return message Pendanaan Terpenuhi', async (done) => {
           const newInvestor = await new Investor({ ...investor, email: 'baru@mail.com' });
-          const newToken = await generateToken({id: newInvestor._id});
+          const newToken = await generateToken({id: newInvestor._id})
 
           console.log(newInvestor, newToken)
           request(app)
