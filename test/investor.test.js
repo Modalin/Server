@@ -421,22 +421,23 @@ describe('Investor', () => {
             })
         })
 
-        test('should change business unit to 0 and return message Pendanaan Terpenuhi', async (done) => {
-          const newInvestor = await new Investor({ ...investor, email: 'baru@mail.com' });
-          const newToken = await generateToken({id: newInvestor._id})
-
-          console.log(newInvestor, newToken)
-          request(app)
-            .patch(baseUrl + '/business/' + businessId)
-            .set('token', newToken)
-            .send({ invest_value: 3000000, total_unit: 2 })
-            .end((err, res) => {
-              console.log(res.status, res.text)
-              if (err) {
-                return done(err);
-              }
-              expect(400);
-              return done();
+        test('should change business unit to 0 and return message Pendanaan Terpenuhi', (done) => {
+          Investor.create({ ...investor, email: 'baru@mail.com' })
+            .then(response => {
+              request(app)
+                .patch(baseUrl + '/business/' + businessId)
+                .set('token', generateToken({id: response._id}))
+                .send({ invest_value: 3000000, total_unit: 30 })
+                .end((err, res) => {
+                  if (err) {
+                    return done(err);
+                  }
+                  expect(400);
+                  return done();
+                })
+            })
+            .catch(err => {
+              return done(err)
             })
         })
 
