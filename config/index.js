@@ -89,14 +89,6 @@ const bussinesSchema = new mongoose.Schema({
       }
     })
 
-// bussinesSchema.pre('find', function (next, docs) {
-//   console.log(this._find)
-//   // if (this._update.income) {
-//   //   this._update.$set.incomePersentase = (this._update.income / (this._update.saldo - this._update.income)) * 100;
-//   // }
-//   next();
-// });
-
 const Business = mongoose.model('Business', bussinesSchema);
 
 //Mitra
@@ -290,13 +282,6 @@ const investorSchema = new mongoose.Schema({
     }
   }
 });
-
-// investorSchema.pre('findOneAndUpdate', function (next, docs) {
-//   if (this._update.income) {
-//     this._update.$set.incomePersentase = (this._update.income / (this._update.saldo - this._update.income)) * 100;
-//   }
-//   next();
-// });
 
 const Investor = mongoose.model('Investors', investorSchema);
 

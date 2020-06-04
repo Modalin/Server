@@ -3,7 +3,7 @@ const { Investor, Mitra } = require('../config');
 
 async function InvestorAuth(req, res, next) {
     try {
-        let decoded = verifyToken(req.headers.token);
+        let decoded = await verifyToken(req.headers.token);
         await Investor.findById(decoded.id)
             .then(user => {
                 if (user) {

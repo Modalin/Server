@@ -12,7 +12,7 @@ switch (env) {
 const app = require('../app');
 const http = require('http');
 const server = http.createServer(app);
-
+//192.168.100.4
 server.listen(process.env.PORT, () => {
     console.log('you are listening to port', + process.env.PORT);
 })

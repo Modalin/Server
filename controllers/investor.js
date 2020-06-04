@@ -6,6 +6,7 @@ class InvestorController {
 
   //Authentication
   static async signIn(req, res) {
+    console.log('berhasil masuk controller')
     const { email, password } = req.body;
     try {
       await Investor.findOne({ email: email }).then((foundInvestor) => {

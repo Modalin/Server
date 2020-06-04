@@ -4,13 +4,16 @@ const router = require('./routes');
 const cors = require('cors');
 
 app.use(cors());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 app.use('/', router);
 app.use((err, req, res, next) => {
-  console.log(err)
-  return res.status(500).json(err);
+  if (err._message === 'Validation failed') {
+    return res.status(400).json(err.errors)
+  } else {
+    return res.status(500).json(err);
+  }
 });
 
 module.exports = app;
