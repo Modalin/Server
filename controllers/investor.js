@@ -246,9 +246,9 @@ class InvestorController {
           return res.status(400).json({ message: 'Business not found'});
         }
       })
-      .catch(err => {
-        next(err);
-      })
+      // .catch(err => {
+      //   next(err);
+      // })
   }
 }
 

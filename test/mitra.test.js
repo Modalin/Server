@@ -27,7 +27,17 @@ let businessData = {
     "image_360" : "httpgs://modalin-a9fea.appspot.com/mitra/business/42697ea8-e4a1-4bd8-a6ce-643d6e7654f3.jpg",
     "total_profit": 0,
     "periode": 1,
-    "status" : ""
+    "status" : "",
+    "profit_times": 2,
+    "investor": [
+        {
+            "_id": "5ed91aa19c35c808bc9c769d",
+            "investorId": "5ed91a849c35c808bc9c769c",
+            "invest_value": 3000000,
+            "total_unit": 200,
+            "investor_profit": 0
+        }
+    ]
 }
 
 let mitraData = {
@@ -87,24 +97,7 @@ beforeAll((done) => {
       .then(response => {
         token = generateToken({id: response._id})
         MitraId = response._id;
-        Business.create({
-            "business_name" : "ternak bebek3",
-              "business_type":"Konveksi",
-              "location" : {
-                "lat":"8913723129394",
-                "long":"83723842348392z",
-                "address":"jl.ciptomangunkusumo"
-              },
-              "business_unit" : 20,
-              "value_per_unit" : 2000000,
-              "business_value" : 50000000,
-              "persentase_value": 0.017,
-              "business_description" : "lorem insum skadjsalkdjlasjldjasjd",
-              "image_360" : "httpgs://modalin-a9fea.appspot.com/mitra/business/42697ea8-e4a1-4bd8-a6ce-643d6e7654f3.jpg",
-              "total_profit": 0,
-              "periode": 1,
-              "status" : ""
-          })
+        Business.create(businessData)
             .then(response => {
                 businessId = response._id;
                 done()
@@ -277,6 +270,7 @@ describe('mitra services', () => {
         test('should success show mitra by id', (done) => {
             request(app)    
             .get('/mitra/' + MitraId)
+            .set('token', token)
             .end((err, response) => {
                 if (err) {
                     return done(err)
@@ -304,7 +298,8 @@ describe('mitra services', () => {
 
         test('should success show business by auth', (done) => {
             request(app)    
-            .get('/mitra/business' + MitraId)
+            .get('/mitra/business/' + businessId)
+            .set('token', token)
             .end((err, response) => {
                 if (err) {
                     return done(err)
@@ -328,24 +323,26 @@ describe('mitra services', () => {
             })
         })
 
-        test('should success update a business', (done) => {
-            request(app)    
-            .put('/mitra/business/' + MitraId)
-            .send({ ...businessData, "business_name" : "ternak manusia"})
-            .end((err, response) => {
-                if (err) {
-                    return done(err)
-                } else {
-                    expect(201)
-                    return done()
-                }
-            })
-        })
+        // test('should success update a business', (done) => {
+        //     request(app)    
+        //     .put('/mitra/business/' + MitraId)
+        //     .set('token', token)
+        //     .send({ ...businessData, business_name : "ternak manusia"})
+        //     .end((err, response) => {
+        //         if (err) {
+        //             return done(err)
+        //         } else {
+        //             expect(201)
+        //             return done()
+        //         }
+        //     })
+        // })
 
         test('should success update profit', (done) => {
             request(app)    
-            .put('/mitra/business/profit/' + businessId)
-            .send({ profit: 27000000 })
+            .patch('/mitra/business/profit/' + businessId)
+            .set('token', token)
+            .send({ profit: 270000 })
             .end((err, response) => {
                 if (err) {
                     return done(err)
@@ -358,7 +355,8 @@ describe('mitra services', () => {
 
         test('should success create report', (done) => {
             request(app)    
-            .put('/mitra/report/' + businessId)
+            .patch('/mitra/bussiness/report/' + businessId)
+            .set('token', token)
             .send({ report: 27000000 })
             .end((err, response) => {
                 if (err) {
@@ -399,7 +397,6 @@ describe('mitra services', () => {
             // .post('/mitra/signup')
             // .send({ ...mitraData, email: 'ada'})
             // .end((err, response) => {
-            //     console.log(res.text)
             //     if (err) {
             //         expect(401);
             //         return done(err)
@@ -415,10 +412,8 @@ describe('mitra services', () => {
 afterAll((done) => {
     Mitra.deleteMany({})
       .then(() => {
-          console.log('DB clean up')
           Business.deleteMany({})
           .then(() => {
-              console.log('DB clean up')
               done()
           })
           .catch(err => {

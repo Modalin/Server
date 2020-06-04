@@ -123,11 +123,9 @@ beforeAll((done) => {
 afterAll((done) => {
     Investor.deleteMany({})
         .then(() => {
-            console.log('DB clean up')
             return Mitra.deleteMany({})
         })
         .then(() => {
-            console.log('DB clean up')
             done()
         })
         .catch(err => {

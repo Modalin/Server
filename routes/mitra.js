@@ -19,7 +19,7 @@ router.get('/:id', MitraController.getById);
 //Business
 router.get('/business/:id', MitraController.getBusinessByAuth)
 router.post('/business', MitraController.createBusiness)
-router.put('/business/:id', MitraController.updateAllBusiness);
+// router.put('/business/:id', MitraController.updateAllBusiness);
 
 //add investor
 // router.patch('/business/invest/:id', MitraController.addInvestor);

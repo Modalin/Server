@@ -4,7 +4,7 @@ const { Investor, Business } = require('../config/index');
 const { encrypt } = require('../helpers/bcrypt');
 const { generateToken } = require('../helpers/jwt');
 const baseUrl = '/investor'
-
+const mongoose = require('mongoose'); 
 //Dummy
 const investor = {
   name: 'qwoqwo1',
@@ -12,7 +12,7 @@ const investor = {
   address: 'Jl.Jomblo No.8, Kaliputih, Jakarta Pusat',
   photo_profile: 'jomblo.jpg',
   job: 'jomblo',
-  password: 'qweqwe',
+  password: encrypt('qweqwe'),
   phone: '09989898938',
   document: {
       KTP: {
@@ -94,7 +94,6 @@ beforeAll((done) => {
     .then(response => {
       investorId = response._id;
       token = generateToken({id: response._id})
-      console.log('Berhasil Create Investor')
       Business.create({
         "business_name" : "ternak bebek3",
           "business_type":"Konveksi",
@@ -103,7 +102,7 @@ beforeAll((done) => {
             "long":"83723842348392z",
             "address":"jl.ciptomangunkusumo"
           },
-          "business_unit" : 20,
+          "business_unit" : 50,
           "value_per_unit" : 2000000,
           "business_value" : 50000000,
           "persentase_value": 0.017,
@@ -115,15 +114,12 @@ beforeAll((done) => {
       })
         .then(response => {
           businessId = response._id;
-          console.log('Berhasil Create Business')
           done()
         })
         .catch(err => {
-          console.log('Gagal Create Business')
         })  
     })
     .catch(err => {
-      console.log('Berhasil Create Investor')
       done(err)
     })
 })
@@ -365,7 +361,6 @@ describe('Investor', () => {
               .set('token', token)
               .send({ invest_value: 3000000, total_unit: 20 })
               .end((err, res) => {
-                console.log('BUSINESS ID', businessId)
                 if (err) {
                   return done(err);
                 }
@@ -394,16 +389,20 @@ describe('Investor', () => {
   
     describe('Failed services', () => {
       describe('Business failed', () => {
+        const salahId = mongoose.Types.ObjectId('578df3efb618f5141202a196');
         test('should failed invest business data because business not found', (done) => {
           request(app)
-            .patch(baseUrl + '/business/' + 'businessId')
+            .patch(baseUrl + '/business/' + salahId)
             .set('token', token)
-            .send({ invest_value: 3000000, total_unit: 20 })
+            .send({ invest_value: 3000000, total_unit: 2 })
             .end((err, res) => {
+              if (res.error) {
+                expect(400);
+                return done(err);
+              }
               if (err) {
                 return done(err);
               }
-              expect(res.status).toBe(400);
               return done();
             })
         })
@@ -412,7 +411,7 @@ describe('Investor', () => {
           request(app)
             .patch(baseUrl + '/business/' + businessId)
             .set('token', token)
-            .send({ invest_value: 3000000, total_unit: 20 })
+            .send({ invest_value: 3000000, total_unit: 2 })
             .end((err, res) => {
               if (err) {
                 return done(err);
@@ -422,7 +421,26 @@ describe('Investor', () => {
             })
         })
 
-        test('should failed invest business data because empty unit', (done) => {
+        test('should change business unit to 0 and return message Pendanaan Terpenuhi', async (done) => {
+          const newInvestor = await new Investor({ ...investor, email: 'baru@mail.com' });
+          const newToken = await generateToken({id: newInvestor._id});
+
+          console.log(newInvestor, newToken)
+          request(app)
+            .patch(baseUrl + '/business/' + businessId)
+            .set('token', newToken)
+            .send({ invest_value: 3000000, total_unit: 2 })
+            .end((err, res) => {
+              console.log(res.status, res.text)
+              if (err) {
+                return done(err);
+              }
+              expect(400);
+              return done();
+            })
+        })
+
+        test('should failed invest business data because Business unit is not enough', (done) => {
           request(app)
             .patch(baseUrl + '/business/' + businessId)
             .set('token', token)
@@ -585,7 +603,6 @@ describe('Investor', () => {
           //   .post(baseUrl + '/signup')
           //   .send({ ...investor, email: 'aku'})
           //   .end((err, res) => {
-          //     console.log(err)
           //     if (err) {
           //       expect(err).not.toBeNull();
           //       return done(err);
@@ -693,10 +710,8 @@ describe('Investor', () => {
   afterAll((done) => {
     Investor.deleteMany({})
       .then(() => {
-          console.log('DB clean up')
           Business.deleteMany({})
           .then(() => {
-              console.log('DB clean up')
               done()
           })
           .catch(err => {

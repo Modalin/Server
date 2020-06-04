@@ -82,7 +82,6 @@ class MitraController {
         });
       });
     // } catch (err) {
-    //   console.log(err);
     //   return res.status(400).json({
     //     error: err.errors,
     //   });
@@ -91,14 +90,14 @@ class MitraController {
 
   static async getById (req, res) {
     let { id } = req.params;
-    // try {
+    try {
       let response = await Mitra.findById(id);
       return res.status(200).json(response)
-    // } catch (err) {
+    } catch (err) {
     //   res.status(404).json({
     //     error: err.errors
     //   })
-    // }
+    }
   }
 
   static async getBusinessByAuth (req, res) {
@@ -192,60 +191,59 @@ class MitraController {
     // }
   }
 
-  static async updateAllBusiness() {
-    const {
-      business_name,
-      business_type,
-      location,
-      business_unit,
-      value_per_unit,
-      business_value,
-      persentase_value,
-      business_description,
-      images_360,
-      status,
-      periode,
-      profit_times,
-    } = req.body;
-    const mitra = req.params.id;
-    // try {
-      const filter = { _id: mitra };
-      let data = {
-        mitra,
-        business_name,
-        investor,
-        business_type,
-        location,
-        business_unit,
-        value_per_unit,
-        business_value,
-        business_description,
-        images_360,
-        total_profit,
-        persentase_value,
-        status,
-        periode,
-        profit_times,
-      };
-      let result = await Business.findOneAndUpdate(filter, data, {
-        new: true,
-      });
+  // static async updateAllBusiness(req, res, next) {
+  //   const {
+  //     business_name,
+  //     business_type,
+  //     location,
+  //     business_unit,
+  //     value_per_unit,
+  //     business_value,
+  //     persentase_value,
+  //     business_description,
+  //     images_360,
+  //     status,
+  //     periode,
+  //     profit_times,
+  //   } = req.body;
+  //   const mitra = req.params.id;
+  //   // try {
+  //     const filter = { _id: mitra };
+  //     let data = {
+  //       mitra,
+  //       business_name,
+  //       investor,
+  //       business_type,
+  //       location,
+  //       business_unit,
+  //       value_per_unit,
+  //       business_value,
+  //       business_description,
+  //       images_360,
+  //       total_profit,
+  //       persentase_value,
+  //       status,
+  //       periode,
+  //       profit_times,
+  //     };
+  //     let result = await Business.findOneAndUpdate(filter, data, {
+  //       new: true,
+  //     });
 
-      return res.status(201).json({
-        message: "success update bussiness",
-      });
-    // } catch (err) {
-    //   return res.status(500).json({
-    //     message: "something wrong",
-    //   });
-    // }
-  }
+  //     return res.status(201).json({
+  //       message: "success update bussiness",
+  //     });
+  //   // } catch (err) {
+  //   //   return res.status(500).json({
+  //   //     message: "something wrong",
+  //   //   });
+  //   // }
+  // }
 
   // static async addInvestor(req, res){
   //   const { investor } = req.body
   //   const { id }  = req.params
       
-  //   console.log(investor);
     
   //   try {
   //     const filter = {_id: mongoose.Types.ObjectId(id)}
