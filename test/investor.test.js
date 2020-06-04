@@ -575,13 +575,14 @@ describe('Investor', () => {
   
         test('should return message "is not a valid email!"', (done) => {
           request(app)
-            .post(baseUrl)
+            .post(baseUrl + '/signup')
             .send({ ...investor, email: 'aku'})
             .end((err, res) => {
               if (err) {
                 return done(err);
               }
-              expect(400);
+              console.log(res.text)
+              expect(401);
               return done();
             })
         })

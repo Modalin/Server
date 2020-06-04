@@ -43,8 +43,6 @@ class MitraController {
   }
 
   static async signUp(req, res) {
-    console.log('masuk register');
-    console.log(req.body);
     const {
       name,
       email,
@@ -107,8 +105,6 @@ class MitraController {
     let { id } = req.params;
     // try {
       let response = await Business.find({ mitra: id });
-      console.log('success bisnis auth');
-      console.log(response);
       return res.status(200).json(response)
     // } catch (err) {
     //   return res.status(404).json({
@@ -126,7 +122,6 @@ class MitraController {
 
   //Business
   static async showBusiness(req, res) {
-    console.log('masuk mitra');
     // try {
       let result = await Business.find({});
       return res.status(200).json(result);
@@ -139,7 +134,6 @@ class MitraController {
 
 
   static async createBusiness(req, res) {
-    console.log(req);
     const {
       business_name,
       business_type,
@@ -158,10 +152,7 @@ class MitraController {
     const mitra = req.mitraId;
     
     // try {
-      console.log('ini mitra');
-      console.log(mitra);
       let createMitra = await Mitra.findById({ _id: mitra})
-      console.log(createMitra);
       let data = {
         mitra,
         business_name,
@@ -217,7 +208,7 @@ class MitraController {
       profit_times,
     } = req.body;
     const mitra = req.params.id;
-    try {
+    // try {
       const filter = { _id: mitra };
       let data = {
         mitra,
@@ -243,11 +234,11 @@ class MitraController {
       return res.status(201).json({
         message: "success update bussiness",
       });
-    } catch (err) {
-      return res.status(500).json({
-        message: "something wrong",
-      });
-    }
+    // } catch (err) {
+    //   return res.status(500).json({
+    //     message: "something wrong",
+    //   });
+    // }
   }
 
   // static async addInvestor(req, res){
@@ -285,7 +276,7 @@ class MitraController {
     const { id } = req.params
     const { profit } = req.body
 
-    try {
+    // try {
       const filter = {_id: mongoose.Types.ObjectId(id)}
       const data = {total_profit: profit}
 
@@ -301,18 +292,18 @@ class MitraController {
       res.status(201).json({
         message: 'success update Profit'
       })
-    } catch(err){
-      return res.status(500).json({
-        message: "something wrong",
-      });
-    }
+    // } catch(err){
+    //   return res.status(500).json({
+    //     message: "something wrong",
+    //   });
+    // }
   }
 
   static async createReport(req, res){
     const { report } =  req.body
     const { id } = req.params
 
-    try {
+    // try {
       const filter = {_id: mongoose.Types.ObjectId(id)}
       const data = {$push: {report: report}}
       
@@ -323,11 +314,11 @@ class MitraController {
       res.status(201).json({
         message: 'success create report'
       })
-    } catch(err) {
-      return res.status(500).json({
-        message: "something wrong",
-      });
-    }
+    // } catch(err) {
+    //   return res.status(500).json({
+    //     message: "something wrong",
+    //   });
+    // }
 
   }
   // static async deleteBusiness() {
