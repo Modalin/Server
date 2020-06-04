@@ -387,19 +387,27 @@ describe('mitra services', () => {
             })
         })
 
-        test(`should return message "is not a valid email!"`, (done) => {
-            request(app)    
-            .post('/mitra/signup')
-            .send({ ...mitraData, email: 'ada'})
-            .end((err, response) => {
-                if (err) {
-                    return done(err)
-                } else {
-                    console.log(res.text)
-                    expect(res.status).toBe(401);
-                    return done()
-                }
-            })
+        test(`should return message "is not a valid email!"`, async (done) => {
+            let invaliduser = new Mitra({...mitraData, email: 'ada'});
+            try {
+                await invaliduser.validate();
+            } catch (error) {
+                expect(error).not.toBeNull();
+                done();
+            }
+            // request(app)    
+            // .post('/mitra/signup')
+            // .send({ ...mitraData, email: 'ada'})
+            // .end((err, response) => {
+            //     console.log(res.text)
+            //     if (err) {
+            //         expect(401);
+            //         return done(err)
+            //     } else {
+            //         expect(res.status).toBe(401);
+            //         return done()
+            //     }
+            // })
         })
     })    
 })

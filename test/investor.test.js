@@ -573,18 +573,26 @@ describe('Investor', () => {
             })
         })
   
-        test('should return message "is not a valid email!"', (done) => {
-          request(app)
-            .post(baseUrl + '/signup')
-            .send({ ...investor, email: 'aku'})
-            .end((err, res) => {
-              if (err) {
-                return done(err);
-              }
-              console.log(res.text)
-              expect(401);
-              return done();
-            })
+        test('should return message "is not a valid email!"', async (done) => {
+          let invaliduser = new Investor({...investor, email: 'ada'});
+          try {
+            await invaliduser.validate();
+          } catch (error) {
+            expect(error).not.toBeNull();
+            done();
+          }
+          // request(app)
+          //   .post(baseUrl + '/signup')
+          //   .send({ ...investor, email: 'aku'})
+          //   .end((err, res) => {
+          //     console.log(err)
+          //     if (err) {
+          //       expect(err).not.toBeNull();
+          //       return done(err);
+          //     }
+          //     expect(err).not.toBeNull();
+          //     return done(err);
+          //   })
         })
         
         test('should return message "is not a valid phone number!"', (done) => {
