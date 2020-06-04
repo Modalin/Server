@@ -8,14 +8,14 @@ describe('Investor service', () => {
     password: '123'
   }
   const investorId = '/1';
-  const baseUrl = 'localhostt:3000/investor';
+  const baseUrl = 'localhost:3000/investor/';
   const token = 'token';
 
   describe('Success services', () => {
     describe('Success edit profile', () => {
       test('should return new investor profile', () => {
         request(app)
-          .patch(baseUrl + investorId)
+          .patch(baseUrl)
           .set('token', token)
           .send({ name: 'investor berhasil'})
           .end((err, res) => {
@@ -47,7 +47,7 @@ describe('Investor service', () => {
     describe('Success fetch wallet', () => {
       test('should return wallet data', () => {
         request(app)
-          .get(baseUrl + '/wallet' + investorId)
+          .get(baseUrl + '/wallet')
           .set('token', token)
           .end((err, res) => {
             if (err) {
@@ -63,7 +63,7 @@ describe('Investor service', () => {
     describe('Success fetch wallet', () => {
       test('should return wallet data', () => {
         request(app)
-          .get(baseUrl + '/wallet' + investorId)
+          .get(baseUrl + '/wallet')
           .set('token', token)
           .end((err, res) => {
             if (err) {
@@ -84,7 +84,7 @@ describe('Investor service', () => {
       }
       test('should return new wallet data', () => {
         request(app)
-          .patch(baseUrl + '/wallet' + investorId)
+          .patch(baseUrl + '/wallet')
           .set('token', token)
           .send(wallet)
           .end((err, res) => {
@@ -101,7 +101,7 @@ describe('Investor service', () => {
     describe('Success delete wallet', () => {
       test('should return message "Success deleted wallet data"', () => {
         request(app)
-          .delete(baseUrl + '/wallet' + investorId)
+          .delete(baseUrl + '/wallet')
           .set('token', token)
           .end((err, res) => {
             if (err) {
@@ -120,7 +120,7 @@ describe('Investor service', () => {
       describe('Failed edit profile', () => {
         test('should return message "Unauthorized"', () => {
           request(app)
-            .patch(baseUrl + investorId)
+            .patch(baseUrl)
             .send({ name: 'investor gagal'})
             .end((err, res) => {
               if (err) {
@@ -311,49 +311,6 @@ describe('Investor service', () => {
             }
             expect(400);
             expect({ message: 'Phone cannot be empty'});
-            return done();
-          })
-      })
-    })
-    describe('Failed edit wallet', () => {
-      test('should return message "is not a valid account number"', () => {
-        request(app)
-          .patch(baseUrl + '/wallet' + investorId)
-          .send({ wallet: { ...wallet, accountNumber: 'satu23' } })
-          .end((err, res) => {
-            if (err) {
-              return done(err);
-            }
-            expect(400);
-            expect({ message: 'is not a valid account number'});
-            return done();
-          })
-      })
-
-      test('should return message "is not a valid saldo"', () => {
-        request(app)
-          .patch(baseUrl + '/wallet' + investorId)
-          .send({ wallet: { ...wallet, saldo: 'satu23' } })
-          .end((err, res) => {
-            if (err) {
-              return done(err);
-            }
-            expect(400);
-            expect({ message: 'is not a valid saldo'});
-            return done();
-          })
-      })
-
-      test('should return message "is not a valid income"', () => {
-        request(app)
-          .patch(baseUrl + '/wallet' + investorId)
-          .send({ wallet: { ...wallet, income: 'satu23' } })
-          .end((err, res) => {
-            if (err) {
-              return done(err);
-            }
-            expect(400);
-            expect({ message: 'is not a valid income'});
             return done();
           })
       })
