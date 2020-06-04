@@ -62,22 +62,40 @@ let token = '';
 
 //Set Data to Mongoose
 beforeAll((done) => {
-  //Sign up
-  describe('success register investor', () => {
-    test('should return obj with status 201', done => {
-      request(app)
-        .post(baseUrl + '/signup')
-        .send(investor)
-        .end((err, response) => {
-            if (err) {
-                return done(err)
-            } else {
-                expect(response.status).toBe(201)
-                return done()
-            }
-        })
-    })
+  Investor.create({
+    name: 'qwoqwo1',
+    email: 'mail12@mail.com',
+    address: 'Jl.Jomblo No.8, Kaliputih, Jakarta Pusat',
+    photo_profile: 'jomblo.jpg',
+    job: 'jomblo',
+    password: 'qweqwe',
+    phone: '09989898938',
+    document: {
+        KTP: {
+            url: 'ktp.jpg',
+            no_KTP: '1200123123123'
+        },
+        NPWP: {
+            url: 'npwp.jpg',
+            no_NPWP: '09.254.294.3-407.000'
+        }
+    },
+    wallet: {
+        account_name: 'Jones',
+        bank_name: 'BCA',
+        account_number: '7310252527',
+        saldo: '0',
+        income: '0'
+    }
   })
+    .then(response => {
+      investorId = response._id;
+        done()
+    })
+    .catch(err => {
+        done(err)
+    })
+
   //Sign In
   describe('success login investor', () => {
     test('should return token with status 200', done => {
@@ -117,7 +135,7 @@ describe('Investor service', () => {
     describe('Success find investor', () => {
       test('should return new investor profile', (done) => {
         request(app)
-          .get(baseUrl + 'find/' + investorId)
+          .get(baseUrl + '/find/' + investorId)
           .end((err, res) => {
             if (err) {
               return done(err);
@@ -162,7 +180,7 @@ describe('Investor service', () => {
     describe('Success delete profile', () => {
       test('should return message "Success deleted profile"', (done) => {
         request(app)
-          .delete(baseUrl + investorId)
+          .delete(baseUrl + "/" + investorId)
           .set('token', token)
           .end((err, res) => {
             if (err) {
@@ -368,7 +386,7 @@ describe('Investor service', () => {
         request(app)
           .patch(baseUrl + '/wallet')
           .set('token', token)
-          .send({ wallet: { ...investor.wallet, saldo: 'satu23' } })
+          .send({ ...investor, wallet: { ...investor.wallet, saldo: 'satu23' } })
           .end((err, res) => {
             if (err) {
               return done(err);
@@ -382,7 +400,7 @@ describe('Investor service', () => {
         request(app)
           .patch(baseUrl + '/wallet')
           .set('token', token)
-          .send({ wallet: { ...investor.wallet, income: 'satu23' } })
+          .send({ ...investor, wallet: { ...investor.wallet, income: 'satu23' } })
           .end((err, res) => {
             if (err) {
               return done(err);
