@@ -160,12 +160,12 @@ const mitraSchema = new mongoose.Schema({
       no_NPWP: {
         type: String,
         default: 0,
-        validate: {
-          validator: function(v) {
-            return /\d+/g.test(v);
-          },
-          message: props => `${props.value} is not a valid numbers!`
-        }
+        // validate: {
+        //   validator: function(v) {
+        //     return /\d+/g.test(v);
+        //   },
+        //   message: props => `${props.value} is not a valid numbers!`
+        // }
       }
     },
     SIUP: {
@@ -216,12 +216,12 @@ const investorSchema = new mongoose.Schema({
   phone: {
     type: String,
     required: [true, 'Phone Number must be filled'],
-    validate: {
-      validator: function(v) {
-        return /\d+/g.test(v);
-      },
-      message: props => `${props.value} is not a valid numbers!`
-    }
+    // validate: {
+    //   validator: function(v) {
+    //     return /\d+/g.test(v);
+    //   },
+    //   message: props => `${props.value} is not a valid numbers!`
+    // }
   },
   document: {
     KTP: {
@@ -242,12 +242,12 @@ const investorSchema = new mongoose.Schema({
       no_NPWP: {
         type: String,
         default: 0,
-        validate: {
-          validator: function(v) {
-            return /\d+/g.test(v);
-          },
-          message: props => `${props.value} is not a valid numbers!`
-        }
+        // validate: {
+        //   validator: function(v) {
+        //     return /\d+/g.test(v);
+        //   },
+        //   message: props => `${props.value} is not a valid numbers!`
+        // }
       }
     }
   },
@@ -261,12 +261,12 @@ const investorSchema = new mongoose.Schema({
     account_number: {
       type: String,
       default: 0,
-      validate: {
-        validator: function(v) {
-          return /\d+/g.test(v);
-        },
-        message: props => `${props.value} is not a valid numbers!`
-      }
+      // validate: {
+      //   validator: function(v) {
+      //     return /\d+/g.test(v);
+      //   },
+      //   message: props => `${props.value} is not a valid numbers!`
+      // }
     },
     saldo: {
       type: Number,

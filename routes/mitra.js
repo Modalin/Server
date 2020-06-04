@@ -11,9 +11,9 @@ router.use(MitraAuth)
 
 // Profile
 router.get('/:id', MitraController.getById);
-router.put('/:id');
-router.patch('/:id');
-router.delete('/:id');
+// router.put('/:id');
+// router.patch('/:id');
+// router.delete('/:id');
 
 
 //Business
@@ -22,7 +22,7 @@ router.post('/business', MitraController.createBusiness)
 router.put('/business/:id', MitraController.updateAllBusiness);
 
 //add investor
-router.patch('/business/invest/:id', MitraController.addInvestor);
+// router.patch('/business/invest/:id', MitraController.addInvestor);
 
 //update total_profit
 router.patch('/business/profit/:id', MitraController.updateProfit);

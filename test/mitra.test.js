@@ -1,10 +1,30 @@
 
 const app = require('../app')
 const request = require('supertest')
-const { Mitra } = require('../config/index');
+const { Mitra, Business } = require('../config/index');
 const baseUrl = '/mitra'
 
 const token = ''
+let MitraId = ''
+let businessData = {
+    "business_name" : "ternak bebek3",
+    "business_type":"Konveksi",
+    "location" : {
+        "lat":"8913723129394",
+        "long":"83723842348392z",
+        "address":"jl.ciptomangunkusumo"
+    },
+    "business_unit" : 200,
+    "value_per_unit" : 2000000,
+    "business_value" : 50000000,
+    "persentase_value": 0.017,
+    "business_description" : "lorem insum skadjsalkdjlasjldjasjd",
+    "image_360" : "httpgs://modalin-a9fea.appspot.com/mitra/business/42697ea8-e4a1-4bd8-a6ce-643d6e7654f3.jpg",
+    "total_profit": 0,
+    "periode": 1,
+    "status" : ""
+}
+
 let data = {
     "business_name" : "ternak bebek3",
     "business_type":"Konveksi",
@@ -273,11 +293,111 @@ describe('mitra services', () => {
                         return done()
                     }
                 })
+            })
+        })        
+    })
 
+    describe('Success Services', () => {
+        test('should success show mitra by id', (done) => {
+            request(app)    
+            .get('/mitra/' + MitraId)
+            .end((err, response) => {
+                console.log("MITRA ID", MitraId)
+                if (err) {
+                    return done(err)
+                } else {
+                    expect(200)
+                    return done()
+                }
             })
         })
 
-        
-    })
+        test('should success create a business', (done) => {
+            request(app)    
+            .post('/mitra/business')
+            .set('token', token)
+            .send(businessData)
+            .end((err, response) => {
+                if (err) {
+                    return done(err)
+                } else {
+                    expect(201)
+                    return done()
+                }
+            })
+        })
 
+        test('should success show business by auth', (done) => {
+            request(app)    
+            .get('/mitra/business' + MitraId)
+            .end((err, response) => {
+                if (err) {
+                    return done(err)
+                } else {
+                    expect(200)
+                    return done()
+                }
+            })
+        })
+
+        test('should success show all business', (done) => {
+            request(app)    
+            .get('/mitra/business')
+            .end((err, response) => {
+                if (err) {
+                    return done(err)
+                } else {
+                    expect(200)
+                    return done()
+                }
+            })
+        })
+
+        test('should success update a business', (done) => {
+            request(app)    
+            .put('/mitra/business' + MitraId)
+            .send({ ...businessData, "business_name" : "ternak manusia"})
+            .end((err, response) => {
+                if (err) {
+                    return done(err)
+                } else {
+                    expect(201)
+                    return done()
+                }
+            })
+        })
+
+        test('should success update a business', (done) => {
+            request(app)    
+            .put('/mitra/business' + MitraId)
+            .send({ ...businessData, "business_name" : "ternak manusia"})
+            .end((err, response) => {
+                if (err) {
+                    return done(err)
+                } else {
+                    expect(201)
+                    return done()
+                }
+            })
+        })
+    })
+    
 })
+
+afterAll((done) => {
+    Mitra.deleteMany({})
+      .then(() => {
+          console.log('DB clean up')
+          Business.deleteMany({})
+          .then(() => {
+              console.log('DB clean up')
+              done()
+          })
+          .catch(err => {
+              done(err)
+          })
+      })
+      .catch(err => {
+          done(err)
+      })
+  })

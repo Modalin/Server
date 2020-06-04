@@ -8,7 +8,7 @@ class MitraController {
   //Authentication
   static async signIn(req, res) {
     const { email, password } = req.body;
-    try {
+    // try {
       await Mitra.findOne({ email: email }).then((foundMitra) => {
         if (foundMitra) {
           let verify = decrypt(password, foundMitra.password);
@@ -35,11 +35,11 @@ class MitraController {
           });
         }
       });
-    } catch (err) {
-      return res.status(err.status).json({
-        message: err.message,
-      });
-    }
+    // } catch (err) {
+    //   return res.status(err.status).json({
+    //     message: err.message,
+    //   });
+    // }
   }
 
   static async signUp(req, res) {
@@ -69,7 +69,7 @@ class MitraController {
       bank_account,
       account_number
     };
-    try {
+    // try {
       await Mitra.create(inputData).then((response) => {
         res.status(201).json({
           name: response.name,
@@ -83,43 +83,42 @@ class MitraController {
           document: response.document,
         });
       });
-    } catch (err) {
-      console.log(err);
-      return res.status(400).json({
-        error: err.errors,
-      });
-    }
+    // } catch (err) {
+    //   console.log(err);
+    //   return res.status(400).json({
+    //     error: err.errors,
+    //   });
+    // }
   }
 
   static async getById (req, res) {
     let { id } = req.params;
-    try {
+    // try {
       let response = await Mitra.findById(id);
       return res.status(200).json(response)
-    } catch (err) {
-      res.status(404).json({
-        error: err.errors
-      })
-    }
+    // } catch (err) {
+    //   res.status(404).json({
+    //     error: err.errors
+    //   })
+    // }
   }
 
   static async getBusinessByAuth (req, res) {
-    console.log('masuk server business auth');
     let { id } = req.params;
-    try {
+    // try {
       let response = await Business.find({ mitra: id });
       console.log('success bisnis auth');
       console.log(response);
       return res.status(200).json(response)
-    } catch (err) {
-      return res.status(404).json({
-        message: "Business Not Found !!",
-      });
-    }
+    // } catch (err) {
+    //   return res.status(404).json({
+    //     message: "Business Not Found !!",
+    //   });
+    // }
   }
 
   //Profile
-  static async editProfile() {}
+  // static async editProfile() {}
 
   // static async deleteProfile() {
 
@@ -128,14 +127,14 @@ class MitraController {
   //Business
   static async showBusiness(req, res) {
     console.log('masuk mitra');
-    try {
+    // try {
       let result = await Business.find({});
       return res.status(200).json(result);
-    } catch (err) {
-      return res.status(500).json({
-        message: "something wrong !!",
-      });
-    }
+    // } catch (err) {
+    //   return res.status(500).json({
+    //     message: "something wrong !!",
+    //   });
+    // }
   }
 
 
@@ -158,7 +157,7 @@ class MitraController {
     } = req.body;
     const mitra = req.mitraId;
     
-    try {
+    // try {
       console.log('ini mitra');
       console.log(mitra);
       let createMitra = await Mitra.findById({ _id: mitra})
@@ -194,12 +193,12 @@ class MitraController {
           message: "success create bussiness",
         });
       })
-    } catch (err) {
+    // } catch (err) {
 
-      return res.status(500).json({
-        message: "something wrong",
-      });
-    }
+    //   return res.status(500).json({
+    //     message: "something wrong",
+    //   });
+    // }
   }
 
   static async updateAllBusiness() {
@@ -251,36 +250,36 @@ class MitraController {
     }
   }
 
-  static async addInvestor(req, res){
-    const { investor } = req.body
-    const { id }  = req.params
+  // static async addInvestor(req, res){
+  //   const { investor } = req.body
+  //   const { id }  = req.params
       
-    console.log(investor);
+  //   console.log(investor);
     
-    try {
-      const filter = {_id: mongoose.Types.ObjectId(id)}
-      const data = {$push: {investor: investor}}
+  //   try {
+  //     const filter = {_id: mongoose.Types.ObjectId(id)}
+  //     const data = {$push: {investor: investor}}
       
-     let result =  await Business.findOneAndUpdate(filter, data, {
-        new: true
-      })
+  //    let result =  await Business.findOneAndUpdate(filter, data, {
+  //       new: true
+  //     })
 
-      let totalUnit = 0
-      result.investor.forEach(el => {
-        totalUnit += el.total_unit
-      });
-      const updateUnit = {business_unit: result.business_unit - totalUnit}
-        await Business.findOneAndUpdate(filter, updateUnit)
-        return res.status(201).json({
-          message: 'success add investor'
-      })
-    } catch(err){
+  //     let totalUnit = 0
+  //     result.investor.forEach(el => {
+  //       totalUnit += el.total_unit
+  //     });
+  //     const updateUnit = {business_unit: result.business_unit - totalUnit}
+  //       await Business.findOneAndUpdate(filter, updateUnit)
+  //       return res.status(201).json({
+  //         message: 'success add investor'
+  //     })
+  //   } catch(err){
     
-      return res.status(500).json({
-        message: "something wrong",
-      });
-    }
-  }
+  //     return res.status(500).json({
+  //       message: "something wrong",
+  //     });
+  //   }
+  // }
 
   static async updateProfit(req, res){
     const { id } = req.params

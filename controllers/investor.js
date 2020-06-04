@@ -1,4 +1,4 @@
-const { Investor, Business, Mitra } = require('../config');
+const { Investor, Business } = require('../config');
 const { encrypt, decrypt } = require('../helpers/bcrypt');
 const { generateToken, verifyToken } = require('../helpers/jwt');
 
@@ -6,9 +6,8 @@ class InvestorController {
 
   //Authentication
   static async signIn(req, res) {
-    console.log('berhasil masuk controller')
     const { email, password } = req.body;
-    try {
+    // try {
       await Investor.findOne({ email: email }).then((foundInvestor) => {
         
         if (foundInvestor) {
@@ -43,17 +42,16 @@ class InvestorController {
         }
       })
 
-    } catch (err) {
-        return res.status(500).json({
-          message: err.message,
-      });
-    }
+    // } 
+    // catch (err) {
+    //     return res.status(500).json({
+    //       message: err.message,
+    //   });
+    // }
   }
 
 
   static async signUp(req, res) {
-    console.log('masuk server');
-    console.log(req.body);
     const { name, email, address, photo_profile, job, password, document, phone, wallet } = req.body;
     const inputData = { 
       name, 
@@ -66,7 +64,7 @@ class InvestorController {
       phone,
       wallet
     };
-    try {
+    // try {
       await Investor.create(inputData).then((response) => {
         res.status(201).json({
           name: response.name, 
@@ -77,27 +75,27 @@ class InvestorController {
           document: response.document,
           phone: response.phone,
           wallet: response.wallet
+          })
         })
-      })
-    }
-    catch(err) {
-      console.log(err);
-      await res.status(400).json({
-        error: err.errors
-      })
-    }
+      // } catch(err) {
+      //   await res.status(400).json({
+      //     error: err.errors
+      //   })
+      // }
+    
   }
 
   static async findInvestor(req, res) {
     let { id } = req.params;
-    try {
+    // try {
       let response = await Investor.findById(id);
       return res.status(200).json(response)
-    } catch (err) {
-      return res.status(404).json({
-        error: err.errors
-      })
-    }
+    // } 
+    // catch (err) {
+    //   return res.status(404).json({
+    //     error: err.errors
+    //   })
+    // }
   }
 
   //Profile
@@ -107,18 +105,16 @@ class InvestorController {
 
     Investor.findById(decoded.id)
       .then(investor => {
-        console.log(investor);
         const { name, email, address, job, phone, photo_profile, document, wallet } = investor;
         const data = { name, email, address, job, phone, photo_profile, document, wallet };
         return res.status(200).json(data)
       })
-      .catch(err => {
-        return next(err);
-      })
+      // .catch(err => {
+      //   return next(err);
+      // })
   }
 
   static editProfile(req, res, next) {
-    console.log('masuk edit server');
     const { name, photo_profile, phone, address, wallet, job } = req.body;
     const decoded = verifyToken(req.headers.token)
 
@@ -126,8 +122,6 @@ class InvestorController {
       .then(investor => {
         const { name, email, address, job, phone, photo_profile, document, wallet } = investor;
         const data = { name, email, address, job, phone, photo_profile, document, wallet };
-        console.log('ini hasil edit');
-        console.log(data);
         return res.status(200).json(data);
       })
       .catch(err => {
@@ -135,34 +129,32 @@ class InvestorController {
       })
   }
 
-  static deleteProfile(req, res, next) {
-    const { id } = req.user_id;
+  // static deleteProfile(req, res, next) {
+  //   const { id } = req.user_id;
 
-    Investor.findOneAndRemove({ _id: id })
-      .then(investor => {
-        if (investor) {
-          return res.status(200).json({ message: 'Success deleted profile' });
-        } else {
-          return res.status(404).json({ message: 'User profile not found' });
-        }
-      })
-      .catch(err => {
-        return next(err);
-      })
-  }
+  //   Investor.findOneAndRemove({ _id: id })
+  //     .then(investor => {
+  //       if (investor) {
+  //         return res.status(200).json({ message: 'Success deleted profile' });
+  //       } else {
+  //         return res.status(404).json({ message: 'User profile not found' });
+  //       }
+  //     })
+  //     .catch(err => {
+  //       return next(err);
+  //     })
+  // }
 
   //Wallet
   static showWallet(req, res) {
     const id = req.user_id;
-    console.log(id);
     Investor.findById(id)
       .then(investor => {
-        // investor.wallet.incomePersentase = (investor.wallet.income / (investor.wallet.saldo - investor.wallet.income)) * 100;
         return res.status(200).json(investor.wallet);
       })
-      .catch(err => {
-        return res.status(404).json(err)
-      })
+      // .catch(err => {
+      //   return next(err);
+      // })
   }
 
   static editWalletSaldo(req, res, next) {
@@ -173,9 +165,9 @@ class InvestorController {
       .then(investor => {
         return res.status(200).json(investor.wallet);
       })
-      .catch(err => {
-        return next(err);
-      })
+      // .catch(err => {
+      //   return next(err);
+      // })
   }
 
   //Business
@@ -184,22 +176,24 @@ class InvestorController {
       .then(business => {
         return res.status(200).json(business);
       })
-      .catch(err => {
-        return next(err);
-      })
+      // .catch(err => {
+      //   return next(err);
+      // })
   }
 
   static showInvestorBusiness(req, res, next) {
     const ObjectID = require('mongodb').ObjectID;
 
+    //Find All Business Invested
     Business.find({ 'investor.investorId': ObjectID(req.user_id) })
       .then(invest => {
         let investorIncome = 0;
+        //Find data invested
         invest.map(el => {
           const result = el.investor.find(investor => investor.investorId.toString() == req.user_id)
           if (result) {
             //Investor income formula
-            investorIncome += result.investor_profit;
+            investorIncome += result.invest_value;
           }
         })
         if (investorIncome) {
@@ -209,16 +203,16 @@ class InvestorController {
               result.save();
               return res.status(200).json(invest);
             })
-            .catch(err => {
-              return next(err);
-            })
+            // .catch(err => {
+            //   return next(err);
+            // })
         } else {
           return res.status(200).json(invest);
         }
       })
-      .catch(err => {
-        return next(err);
-      })
+      // .catch(err => {
+      //   return next(err);
+      // })
   }
 
   static investToBusiness(req, res, next) {
@@ -241,9 +235,9 @@ class InvestorController {
                   }
                   return res.status(200).json({ message: 'Success invest' });
                 })
-                .catch(err => {
-                  next(err);
-                })
+                // .catch(err => {
+                //   next(err);
+                // })
             }
           } else {
             return res.status(400).json({ message: 'Business unit is not enough'});

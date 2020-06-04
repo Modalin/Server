@@ -15,9 +15,9 @@ async function InvestorAuth(req, res, next) {
                     })
                 }
             })
-            .catch(err => {
-                next(err)
-            })
+            // .catch(err => {
+            //     next(err)
+            // })
     } catch(err) {
         return res.status(401).json({
             message: 'Login required'
@@ -39,9 +39,9 @@ async function MitraAuth(req, res, next) {
                     })
                 }
             })
-            .catch(err => {
-                return res.status(500).json(err)
-            })
+            // .catch(err => {
+            //     return res.status(500).json(err)
+            // })
     } catch(err) {
         return res.status(401).json({
             message: 'Login required'
