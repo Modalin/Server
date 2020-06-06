@@ -454,6 +454,33 @@ describe('Investor', () => {
               return done();
             })
         })
+
+        // test('should failed invest business data because investor not invested', (done) => {
+        //   Business.findById(businessId)
+        //     .then(buseiness => {
+        //     //   "investor": [
+        //     //     {
+        //     //         "_id": "5ed91aa19c35c808bc9c769d",
+        //     //         "investorId": "5ed91a849c35c808bc9c769c",
+        //     //         "invest_value": 3000000,
+        //     //         "total_unit": 200,
+        //     //         "investor_profit": 0
+        //     //     }
+        //     // ]
+        //     })
+
+        //   request(app)
+        //     .patch(baseUrl + '/business/' + businessId)
+        //     .set('token', token)
+        //     .send({ invest_value: 3000000, total_unit: 2000 })
+        //     .end((err, res) => {
+        //       if (err) {
+        //         return done(err);
+        //       }
+        //       expect(400);
+        //       return done();
+        //     })
+        // })
       })
       
       describe('Failed because token does not exist', () => {
